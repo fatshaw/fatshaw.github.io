@@ -71,9 +71,19 @@
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/04/backend_share/">期货微服务简介</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="微服务概述"><a href="#微服务概述" class="headerlink" title="微服务概述"></a>微服务概述</h3><h4 id="1-后端整体服务"><a href="#1-后端整体服务" class="headerlink" title="1.后端整体服务"></a>1.后端整体服务</h4><p><img src="http://ovqe8818i.bkt.clouddn.com/%E9%83%A8%E7%BD%B2%E5%9B%BE.jpg" alt="部署图"></p>
+        <h4 id="1-后端整体服务"><a href="#1-后端整体服务" class="headerlink" title="1.后端整体服务"></a>1.后端整体服务</h4><p><img src="http://ovqe8818i.bkt.clouddn.com/%E9%83%A8%E7%BD%B2%E5%9B%BE.jpg" alt="部署图"></p>
 <p>我们使用的技术包括：</p>
 <p>开发：配置管理，服务发现，远程调用，网关，日志追踪</p>
 <p>监控：prometheus监控，apm性能管理</p>
@@ -136,13 +146,13 @@
 </li>
 </ul>
 <h4 id="6-日志追踪"><a href="#6-日志追踪" class="headerlink" title="6.日志追踪"></a>6.日志追踪</h4><p>在单体应用时代，所有服务日志在一个应用中，而在微服务时代，一次请求涉及多个服务，日志追踪就变的十分重要。我们使用springcloud-sleuth组件进行日志追踪管理，所有日志都会有一个traceid，当进行远程调用时，该traceid会被传递到下游服务。我们的日志样例如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2017-09-01 16:09:56.828  INFO [zuul-server,e3459faf4e4115d8,e3459faf4e4115d8,false] 9 --- [nio-8041-exec-1] c.y.f.base.filter.RequestLoggingFilter   : After request [method=POST,After request [uri=/api/user-center/device/save;payload=&#123;&quot;deviceToken&quot;:&quot;dd6f96fb3a9c10e6f9087d5ab5291e37&quot;,&quot;deviceId&quot;:&quot;CC2165D8-BADC-476F-8ED8-B71A04CC2E41&quot;,&quot;userId&quot;:9,&quot;os&quot;:&quot;IOS&quot;,&quot;appVersion&quot;:&quot;1.5.0&quot;&#125;],time=12(ms),code=200]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">2017-09-01 16:09:56.828  INFO [zuul-server,e3459faf4e4115d8,e3459faf4e4115d8,false] 9 </div><div class="line">--- [nio-8041-exec-1] c.y.f.base.filter.RequestLoggingFilter   : </div><div class="line">After request [method=POST,After request [uri=/api/user-center/device/save;payload=&#123;&quot;deviceToken&quot;:&quot;dd6f96fb3a9c10e6f9087d5ab5291e37&quot;,</div><div class="line">&quot;deviceId&quot;:&quot;CC2165D8-BADC-476F-8ED8-B71A04CC2E41&quot;,&quot;userId&quot;:9,&quot;os&quot;:&quot;IOS&quot;,&quot;appVersion&quot;:&quot;1.5.0&quot;&#125;],</div><div class="line">time=12(ms),code=200]</div></pre></td></tr></table></figure>
 <p>traceid=e3459faf4e4115d8，同时我们记录了每次请求的耗时和httpcode，方便排查问题</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/04/backend_share/" data-id="cj75j9wb000000wbm0ybfxxqb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/04/backend_share/" data-id="cj75k1276000012bmzq5rxdd8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -187,7 +197,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/04/hello-world/" data-id="cj75j9wbm00010wbm1zlstnjz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/04/hello-world/" data-id="cj75k127v000112bm599r9p5n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -227,7 +237,7 @@
       <ul>
         
           <li>
-            <a href="/2017/09/04/backend_share/">(no title)</a>
+            <a href="/2017/09/04/backend_share/">期货微服务简介</a>
           </li>
         
           <li>
