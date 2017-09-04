@@ -5,12 +5,23 @@
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="微服务概述1.后端整体服务 我们使用的技术包括： 开发：配置管理，服务发现，远程调用，网关，日志追踪 监控：prometheus监控，apm性能管理 部署：docker，k8s 基础组件：mysql，redis，mqtt，rabbitmq 2.配置管理 代码配置分离 我们通过git集中化进行配置管理，配置和程序代码分离，即做到一份程序，多份配置，多处部署     实时刷新配置 通过springcl">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/09/04/backend_share/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="微服务概述1.后端整体服务 我们使用的技术包括： 开发：配置管理，服务发现，远程调用，网关，日志追踪 监控：prometheus监控，apm性能管理 部署：docker，k8s 基础组件：mysql，redis，mqtt，rabbitmq 2.配置管理 代码配置分离 我们通过git集中化进行配置管理，配置和程序代码分离，即做到一份程序，多份配置，多处部署     实时刷新配置 通过springcl">
+<meta property="og:image" content="http://ovqe8818i.bkt.clouddn.com/%E9%83%A8%E7%BD%B2%E5%9B%BE.jpg">
+<meta property="og:image" content="http://ovqe8818i.bkt.clouddn.com/WX20170901-144742@2x.png">
+<meta property="og:image" content="http://ovqe8818i.bkt.clouddn.com/WX20170901-145050@2x.png">
+<meta property="og:image" content="http://ovqe8818i.bkt.clouddn.com/WX20170901-150127@2x.png">
+<meta property="og:image" content="http://ovqe8818i.bkt.clouddn.com/WX20170901-152000@2x.png">
+<meta property="og:image" content="http://ovqe8818i.bkt.clouddn.com/WX20170901-154026@2x.png">
+<meta property="og:updated_time" content="2017-09-04T02:14:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="微服务概述1.后端整体服务 我们使用的技术包括： 开发：配置管理，服务发现，远程调用，网关，日志追踪 监控：prometheus监控，apm性能管理 部署：docker，k8s 基础组件：mysql，redis，mqtt，rabbitmq 2.配置管理 代码配置分离 我们通过git集中化进行配置管理，配置和程序代码分离，即做到一份程序，多份配置，多处部署     实时刷新配置 通过springcl">
+<meta name="twitter:image" content="http://ovqe8818i.bkt.clouddn.com/%E9%83%A8%E7%BD%B2%E5%9B%BE.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -59,9 +70,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-backend_share" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-backend_share" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/09/04/backend_share/" class="article-date">
   <time datetime="2017-09-04T02:14:21.000Z" itemprop="datePublished">2017-09-04</time>
@@ -148,55 +157,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/09/04/hello-world/" class="article-date">
-  <time datetime="2017-09-04T01:47:07.000Z" itemprop="datePublished">2017-09-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/04/hello-world/">Hello World</a>
-    </h1>
+    <a href="/2017/09/04/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/04/hello-world/" data-id="cj75j9wbm00010wbm1zlstnjz" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
 
 </section>
         
