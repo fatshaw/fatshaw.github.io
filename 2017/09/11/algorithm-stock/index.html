@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/09/11/algorithm-stock/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="1. Best Time to Buy and Sell StockSay you have an array for which the ith element is the price of a given stock on day i. If you were only permitted to complete at most one transaction (ie, buy one an">
-<meta property="og:updated_time" content="2017-09-11T07:37:54.000Z">
+<meta property="og:updated_time" content="2017-09-11T07:38:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="best time to buy and sell stock">
 <meta name="twitter:description" content="1. Best Time to Buy and Sell StockSay you have an array for which the ith element is the price of a given stock on day i. If you were only permitted to complete at most one transaction (ie, buy one an">
@@ -67,7 +67,7 @@
         <section id="main"><article id="post-algorithm-stock" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/09/11/algorithm-stock/" class="article-date">
-  <time datetime="2017-09-11T07:37:54.000Z" itemprop="datePublished">2017-09-11</time>
+  <time datetime="2017-09-11T07:38:55.000Z" itemprop="datePublished">2017-09-11</time>
 </a>
     
   <div class="article-category">
@@ -123,12 +123,13 @@
 <p><strong>Answer:</strong></p>
 <p>DP problem </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">prof[r][i] = max(prof[r][i-1],prices[i]+m) // max(profile with no transaction at time i,profile with transaction at time i)</div><div class="line">m = max(m,prof[r-1][i-1]-prices[i]) // max profile with r-1 transaction at time i-1 and buying price = prices[i]</div></pre></td></tr></table></figure>
+<p>代码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">// MaxProfitWithKTransactionDP 动态规划版本</div><div class="line">// prof[r][j] 表示j时刻，最多r次交易可以获得的最大收益</div><div class="line">// m = max(prof[r-1][j-1]-prices[j],m) 表示r-1笔交易情况下，j-1时刻的收益减去j时刻的价格的最大值</div><div class="line">// m意义是基于r-1笔交易收益为prof[r-1][t]的前提下，找到一个低点买入，即需要找到一个时刻t，使得prof[r-1][t-1]-prices[t]值最大，这样才能在后续高点卖出，是的整体收益最大化</div><div class="line">// 由于交易笔数k可能比较大，远远大于prices的长度，即这样交易笔数不在重要，只要有价差就可以买入卖出，所以当k&gt;len(prices)/2时，可以直接退化至任意笔操作</div><div class="line">func MaxProfitWithKTransactionDP(k int, prices []int) int &#123;</div><div class="line">	if prices == nil || len(prices) &lt;= 0 &#123;</div><div class="line">		return 0</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	if k &gt; len(prices)/2 &#123;</div><div class="line">		return quickSlove(prices)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	n := len(prices)</div><div class="line">	prof := make([][]int, k+1, k+1)</div><div class="line">	for i := 0; i &lt; k+1; i++ &#123;</div><div class="line">		prof[i] = make([]int, n, n)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	for r := 1; r &lt;= k; r++ &#123;</div><div class="line">		m := prof[r][0] - prices[0]</div><div class="line">		for i := 1; i &lt; len(prices); i++ &#123;</div><div class="line">			prof[r][i] = max(prof[r][i-1], prices[i]+m)</div><div class="line">			m = max(m, prof[r-1][i-1]-prices[i])</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	return prof[k][n-1]</div><div class="line">&#125;</div><div class="line"></div><div class="line">func max(a int, b int) int &#123;</div><div class="line">	if a &gt; b &#123;</div><div class="line">		return a</div><div class="line">	&#125;</div><div class="line">	return b</div><div class="line">&#125;</div><div class="line"></div><div class="line">func quickSlove(prices []int) int &#123;</div><div class="line">	profile := 0</div><div class="line">	for i := 1; i &lt; len(prices); i++ &#123;</div><div class="line">		if prices[i] &gt; prices[i-1] &#123;</div><div class="line">			profile += prices[i] - prices[i-1]</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	return profile</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/11/algorithm-stock/" data-id="cj7fuw9va00005ibmlydfhjqa" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/09/11/algorithm-stock/" data-id="cj7fuxn2j00009jbmltes0v8b" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
