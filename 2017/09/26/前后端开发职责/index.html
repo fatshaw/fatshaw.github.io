@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:前后端开发职责 tag:开发流程问题前端同学和我在讨论什么功能应该放在后端完成，什么工作应该放在前端完成。 想法 传统的开发模式是后端负责业务逻辑，然后通过模板填充数据的方式返回html给前端显示，前端就只要负责样式设计即可。这种模式的缺点是后端太重，既要负责业务，又要负责显示，前端样式改了，后端也要跟着改，整体效率低下。 随之产生的是前后端分离开发模式，即MVC，目的是解决后端负责">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/09/26/前后端开发职责/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:前后端开发职责 tag:开发流程问题前端同学和我在讨论什么功能应该放在后端完成，什么工作应该放在前端完成。 想法 传统的开发模式是后端负责业务逻辑，然后通过模板填充数据的方式返回html给前端显示，前端就只要负责样式设计即可。这种模式的缺点是后端太重，既要负责业务，又要负责显示，前端样式改了，后端也要跟着改，整体效率低下。 随之产生的是前后端分离开发模式，即MVC，目的是解决后端负责">
+<meta property="og:updated_time" content="2017-09-26T05:45:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:前后端开发职责 tag:开发流程问题前端同学和我在讨论什么功能应该放在后端完成，什么工作应该放在前端完成。 想法 传统的开发模式是后端负责业务逻辑，然后通过模板填充数据的方式返回html给前端显示，前端就只要负责样式设计即可。这种模式的缺点是后端太重，既要负责业务，又要负责显示，前端样式改了，后端也要跟着改，整体效率低下。 随之产生的是前后端分离开发模式，即MVC，目的是解决后端负责">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-前后端开发职责" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/26/前后端开发职责/" class="article-date">
+  <time datetime="2017-09-26T05:45:18.000Z" itemprop="datePublished">2017-09-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title:前后端开发职责</p>
+<h2 id="tag-开发流程"><a href="#tag-开发流程" class="headerlink" title="tag:开发流程"></a>tag:开发流程</h2><h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>前端同学和我在讨论什么功能应该放在后端完成，什么工作应该放在前端完成。</p>
+<h1 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h1><ul>
+<li>传统的开发模式是后端负责业务逻辑，然后通过模板填充数据的方式返回html给前端显示，前端就只要负责样式设计即可。这种模式的缺点是后端太重，既要负责业务，又要负责显示，前端样式改了，后端也要跟着改，整体效率低下。</li>
+<li>随之产生的是前后端分离开发模式，即MVC，目的是解决后端负责数据和业务，前端负责显示，通过Controller进行衔接。但是同样有个问题，即Controller的工作范围，如果和以往一样，controller负责将所有业务数据封装完成，View就是简单的显示数据，这样的好处相比原有的模式只是在于后端不用知道前端样式，只负责返回数据，而模板渲染的工作放到了前端。</li>
+<li>那是不是前端就只是负责显示数据？我觉得不应该这样的，前端也是应该有相应的业务逻辑存在的。那哪些业务逻辑应该放在前端，哪些必须放在后端，其实很难定义。有些业务必须放在后端，比如数据校验，安全分析，权限控制这些是要放在后端。但是有些业务是两边都可以做的，比如菜单栏显示，菜单栏里面的数据如果是固定的，那这个数据应该维护在前端还是后端，其实前后端都可以。</li>
+</ul>
+<h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><h3 id="我觉得针对这个问题我的思路是两点"><a href="#我觉得针对这个问题我的思路是两点" class="headerlink" title="我觉得针对这个问题我的思路是两点"></a>我觉得针对这个问题我的思路是两点</h3><ul>
+<li>从整体最优的角度去思考问题，从开发成本，维护成本角度看，放在哪里是最优的。</li>
+<li>前后端开发语言的特点考虑，前端出现的优势就是快速开发，相比后端java，js更加轻，开发效率更高，所以我个人建议是将一些独立的业务逻辑移到前端，而不是放在后端。而后端java的优势在于性能，安全，强大的框架以及各种成熟的中间件，所以相对复杂的业务流程需要放到后端。</li>
+</ul>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><ul>
+<li>后端注重数据，前端注重展示，有时候边界不是特别清晰，需要从整体考虑收益，而不是单从前端或者后端角度考虑问题。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/26/前后端开发职责/" data-id="cj816h86o0001cibmmevj88nt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/26/系统调用思考/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/26/前后端开发职责/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/26/系统调用思考/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/26/mysql性能入门/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/11/backend_share/">微服务简介</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/11/algorithm-stock/">best time to buy and sell stock</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
