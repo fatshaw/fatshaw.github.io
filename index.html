@@ -48,9 +48,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -60,6 +60,113 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-backend_share" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/26/backend_share/" class="article-date">
+  <time datetime="2017-09-26T06:01:11.000Z" itemprop="datePublished">2017-09-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/26/backend_share/">微服务简介</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 align="center">作者：萧超杰 2017-09-04 </h4>
+
+
+<h4 id="1-后端整体服务"><a href="#1-后端整体服务" class="headerlink" title="1.后端整体服务"></a>1.后端整体服务</h4><p>我们使用的技术包括：</p>
+<p>开发：配置管理，服务发现，远程调用，网关，日志追踪</p>
+<p>监控：prometheus监控，apm性能管理</p>
+<p>部署：docker，k8s</p>
+<p>基础组件：mysql，redis，mqtt，rabbitmq</p>
+<h4 id="2-配置管理"><a href="#2-配置管理" class="headerlink" title="2.配置管理"></a>2.配置管理</h4><ul>
+<li><p>代码配置分离</p>
+<p>我们通过git集中化进行配置管理，配置和程序代码分离，即做到一份程序，多份配置，多处部署</p>
+<p><img src="http://ovqe8818i.bkt.clouddn.com/WX20170901-144742@2x.png" alt="配置管理"></p>
+</li>
+</ul>
+<ul>
+<li><p>实时刷新配置</p>
+<p>通过springcloud-bus项目，我们可以实时动态热更新运行中的程序配置，避免修改配置需要重新打包发布</p>
+<p><img src="http://ovqe8818i.bkt.clouddn.com/WX20170901-145050@2x.png" alt="动态刷新"></p>
+</li>
+<li><p>配置获取</p>
+<p>通过域名conf.jinyi999.cn/{项目名称}/{环境} 获取应用相应环境的配置，比如<a href="http://conf.jinyi999.cn/ytx-sso/k8s或者sso项目k8s环境的配置" target="_blank" rel="external">http://conf.jinyi999.cn/ytx-sso/k8s或者sso项目k8s环境的配置</a></p>
+<p><img src="http://ovqe8818i.bkt.clouddn.com/WX20170901-150127@2x.png" alt="配置"></p>
+<p>​</p>
+</li>
+</ul>
+<h4 id="3-服务注册发现"><a href="#3-服务注册发现" class="headerlink" title="3.服务注册发现"></a>3.服务注册发现</h4><ul>
+<li><p>传统服务管理问题</p>
+<p>传统服务通过域名管理，通过nginx代理服务域名，需要管理nginx和后端服务关系，在微服务时代，服务量级会不断增加，通过传统的nginx管理服务十分不便。比如新增节点，减少节点，都需要对nginx进行重新配置。通过获取服务信息也十分困难不便</p>
+</li>
+</ul>
+<ul>
+<li><p>服务发现好处</p>
+<p>服务发现的好处在于，可以零编码的对所以服务进行动态管理，获取服务信息，如服务ip，端口，监控状态等。我们使用的是eureka进行服务发现管理。</p>
+<p><img src="http://ovqe8818i.bkt.clouddn.com/WX20170901-152000@2x.png" alt="WX20170901-152000@2x"></p>
+</li>
+<li><p>服务发现模型</p>
+<p>服务发现本身需要保证服务的分布式高可用，所以服务发现本身相对比较复杂。在分布式CAP理论基础上，eureka服务发现使用了AP模型，在网络出现问题时，保证了服务的可用性，牺牲了一致性</p>
+</li>
+<li><p>eureka高可用</p>
+<p>我们部署了三台eureka服务，三个节点两两相互备份，保证服务的高可用性，任意一个节点挂了都不会影响服务的可用性</p>
+<p><img src="http://ovqe8818i.bkt.clouddn.com/WX20170901-154026@2x.png" alt="WX20170901-154026@2x"></p>
+<p>​</p>
+</li>
+</ul>
+<h4 id="4-远程调用"><a href="#4-远程调用" class="headerlink" title="4.远程调用"></a>4.远程调用</h4><ul>
+<li>远程调用简称RPC，在我们微服务体系中，我们选用了http作为远程调用协议（后续可以升级为gRpc等方式）。在springcloud体系中，我们使用了feign通过ribbon来进行远程调用。ribbon封装了httpclient或者okhttp，通过eureka获取服务地址并做负载均衡。我们使用了okhttp进行访问，提高http访问效率</li>
+</ul>
+<ul>
+<li><p>重试机制</p>
+<p>远程调用需要考虑重试，比如由于网络超时、服务不稳定等原因造成访问失败。ribbon提供的重试机制为：对于所有GET幂等请求进行重试，重试方式是本机重试或者重新选取一个节点重试。相关配置为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">ribbon:</div><div class="line">  MaxAutoRetries: 1  			#本机重试一次</div><div class="line">  MaxAutoRetriesNextServer: 1	#重新选举一台重试</div><div class="line">  okhttp:</div><div class="line">    enabled: true				#使用okhttp</div><div class="line">    </div><div class="line">eureka:</div><div class="line">  registry-fetch-interval-seconds: 5	#5s从注册中心获取一次服务信息</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="5-网关"><a href="#5-网关" class="headerlink" title="5.网关"></a>5.网关</h4><p>在微服务时间，服务数量相对传统单体应用会增加许多。我们通过统一的网关服务zuul代理访问所有的服务。</p>
+<ul>
+<li><p>网关好处</p>
+<p>统一服务入口，避免客户端调用不同服务</p>
+<p>统一日志管理</p>
+<p>统一监控</p>
+<p>统一权限控制</p>
+<p>统一流量控制</p>
+<p>通过网关，我们可以做很多工作，后续如蓝绿发布，a/b test等</p>
+</li>
+</ul>
+<h4 id="6-日志追踪"><a href="#6-日志追踪" class="headerlink" title="6.日志追踪"></a>6.日志追踪</h4><p>在单体应用时代，所有服务日志在一个应用中，而在微服务时代，一次请求涉及多个服务，日志追踪就变的十分重要。我们使用springcloud-sleuth组件进行日志追踪管理，所有日志都会有一个traceid，当进行远程调用时，该traceid会被传递到下游服务。我们的日志样例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">2017-09-01 16:09:56.828  INFO [zuul-server,e3459faf4e4115d8,e3459faf4e4115d8,false] 9 </div><div class="line">--- [nio-8041-exec-1] c.y.f.base.filter.RequestLoggingFilter   : </div><div class="line">After request [method=POST,After request [uri=/api/user-center/device/save;payload=&#123;&quot;deviceToken&quot;:&quot;dd6f96fb3a9c10e6f9087d5ab5291e37&quot;,</div><div class="line">&quot;deviceId&quot;:&quot;CC2165D8-BADC-476F-8ED8-B71A04CC2E41&quot;,&quot;userId&quot;:9,&quot;os&quot;:&quot;IOS&quot;,&quot;appVersion&quot;:&quot;1.5.0&quot;&#125;],</div><div class="line">time=12(ms),code=200]</div></pre></td></tr></table></figure>
+<p>traceid=e3459faf4e4115d8，同时我们记录了每次请求的耗时和httpcode，方便排查问题</p>
+<h4 id="7-监控"><a href="#7-监控" class="headerlink" title="7.监控"></a>7.监控</h4><p>我们所有的微服务使用springboot框架开发，集成了actuator模块，自动暴露了/health，/metrics等接口，通过springboot-admin模块，我们集成了eureka获取了所有模块的列表，通过每个模块的/health，/metrics接口获取模块信息。<br>springboot-admin模块页面如下:<br><img src="http://ovqe8818i.bkt.clouddn.com/WX20170907-092757@2x.png" alt="springboot-admin"><br>通过springboot-admin，我们可以实时观察到每个模块是否存活，健康状态</p>
+<p>每个模块的内容包括：模块信息，调用情况，环境变量，调用情况<br><img src="http://ovqe8818i.bkt.clouddn.com/WX20170907-092832@2x.png" alt="springboot-admin"><br>比较有用的是模块信息，比如启动时间，内存占用等。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/26/backend_share/" data-id="cj8171n5g0001spbmndlh5vw8" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-系统调用思考" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -109,7 +216,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/系统调用思考/" data-id="cj816zup20003n0bmu9n8sqq7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/26/系统调用思考/" data-id="cj8171n60000cspbmiqi4x15z" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpc/">rpc</a></li></ul>
@@ -179,7 +286,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/我脑海中的优秀技术团队/" data-id="cj816zupx000in0bmguimz52d" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/26/我脑海中的优秀技术团队/" data-id="cj8171n5r0009spbmqr5p9yg6" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/团队管理/">团队管理</a></li></ul>
@@ -230,7 +337,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/前后端开发职责/" data-id="cj816zup70006n0bmiqpxdro5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/26/前后端开发职责/" data-id="cj8171n5n0005spbmgr186q2o" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/开发流程/">开发流程</a></li></ul>
@@ -323,116 +430,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/mysql性能入门/" data-id="cj816zupb0007n0bmwf26m6z9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/26/mysql性能入门/" data-id="cj8171n5p0006spbm0m2oejkz" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-backend_share" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/09/11/backend_share/" class="article-date">
-  <time datetime="2017-09-11T09:34:03.000Z" itemprop="datePublished">2017-09-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/11/backend_share/">微服务简介</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 align="center">作者：萧超杰 2017-09-04 </h4>
-
-
-<h4 id="1-后端整体服务"><a href="#1-后端整体服务" class="headerlink" title="1.后端整体服务"></a>1.后端整体服务</h4><p>我们使用的技术包括：</p>
-<p>开发：配置管理，服务发现，远程调用，网关，日志追踪</p>
-<p>监控：prometheus监控，apm性能管理</p>
-<p>部署：docker，k8s</p>
-<p>基础组件：mysql，redis，mqtt，rabbitmq</p>
-<h4 id="2-配置管理"><a href="#2-配置管理" class="headerlink" title="2.配置管理"></a>2.配置管理</h4><ul>
-<li><p>代码配置分离</p>
-<p>我们通过git集中化进行配置管理，配置和程序代码分离，即做到一份程序，多份配置，多处部署</p>
-<p><img src="http://ovqe8818i.bkt.clouddn.com/WX20170901-144742@2x.png" alt="配置管理"></p>
-</li>
-</ul>
-<ul>
-<li><p>实时刷新配置</p>
-<p>通过springcloud-bus项目，我们可以实时动态热更新运行中的程序配置，避免修改配置需要重新打包发布</p>
-<p><img src="http://ovqe8818i.bkt.clouddn.com/WX20170901-145050@2x.png" alt="动态刷新"></p>
-</li>
-<li><p>配置获取</p>
-<p>通过域名conf.jinyi999.cn/{项目名称}/{环境} 获取应用相应环境的配置，比如<a href="http://conf.jinyi999.cn/ytx-sso/k8s或者sso项目k8s环境的配置" target="_blank" rel="external">http://conf.jinyi999.cn/ytx-sso/k8s或者sso项目k8s环境的配置</a></p>
-<p><img src="http://ovqe8818i.bkt.clouddn.com/WX20170901-150127@2x.png" alt="配置"></p>
-<p>​</p>
-</li>
-</ul>
-<h4 id="3-服务注册发现"><a href="#3-服务注册发现" class="headerlink" title="3.服务注册发现"></a>3.服务注册发现</h4><ul>
-<li><p>传统服务管理问题</p>
-<p>传统服务通过域名管理，通过nginx代理服务域名，需要管理nginx和后端服务关系，在微服务时代，服务量级会不断增加，通过传统的nginx管理服务十分不便。比如新增节点，减少节点，都需要对nginx进行重新配置。通过获取服务信息也十分困难不便</p>
-</li>
-</ul>
-<ul>
-<li><p>服务发现好处</p>
-<p>服务发现的好处在于，可以零编码的对所以服务进行动态管理，获取服务信息，如服务ip，端口，监控状态等。我们使用的是eureka进行服务发现管理。</p>
-<p><img src="http://ovqe8818i.bkt.clouddn.com/WX20170901-152000@2x.png" alt="WX20170901-152000@2x"></p>
-</li>
-<li><p>服务发现模型</p>
-<p>服务发现本身需要保证服务的分布式高可用，所以服务发现本身相对比较复杂。在分布式CAP理论基础上，eureka服务发现使用了AP模型，在网络出现问题时，保证了服务的可用性，牺牲了一致性</p>
-</li>
-<li><p>eureka高可用</p>
-<p>我们部署了三台eureka服务，三个节点两两相互备份，保证服务的高可用性，任意一个节点挂了都不会影响服务的可用性</p>
-<p><img src="http://ovqe8818i.bkt.clouddn.com/WX20170901-154026@2x.png" alt="WX20170901-154026@2x"></p>
-<p>​</p>
-</li>
-</ul>
-<h4 id="4-远程调用"><a href="#4-远程调用" class="headerlink" title="4.远程调用"></a>4.远程调用</h4><ul>
-<li>远程调用简称RPC，在我们微服务体系中，我们选用了http作为远程调用协议（后续可以升级为gRpc等方式）。在springcloud体系中，我们使用了feign通过ribbon来进行远程调用。ribbon封装了httpclient或者okhttp，通过eureka获取服务地址并做负载均衡。我们使用了okhttp进行访问，提高http访问效率</li>
-</ul>
-<ul>
-<li><p>重试机制</p>
-<p>远程调用需要考虑重试，比如由于网络超时、服务不稳定等原因造成访问失败。ribbon提供的重试机制为：对于所有GET幂等请求进行重试，重试方式是本机重试或者重新选取一个节点重试。相关配置为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">ribbon:</div><div class="line">  MaxAutoRetries: 1  			#本机重试一次</div><div class="line">  MaxAutoRetriesNextServer: 1	#重新选举一台重试</div><div class="line">  okhttp:</div><div class="line">    enabled: true				#使用okhttp</div><div class="line">    </div><div class="line">eureka:</div><div class="line">  registry-fetch-interval-seconds: 5	#5s从注册中心获取一次服务信息</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="5-网关"><a href="#5-网关" class="headerlink" title="5.网关"></a>5.网关</h4><p>在微服务时间，服务数量相对传统单体应用会增加许多。我们通过统一的网关服务zuul代理访问所有的服务。</p>
-<ul>
-<li><p>网关好处</p>
-<p>统一服务入口，避免客户端调用不同服务</p>
-<p>统一日志管理</p>
-<p>统一监控</p>
-<p>统一权限控制</p>
-<p>统一流量控制</p>
-<p>通过网关，我们可以做很多工作，后续如蓝绿发布，a/b test等</p>
-</li>
-</ul>
-<h4 id="6-日志追踪"><a href="#6-日志追踪" class="headerlink" title="6.日志追踪"></a>6.日志追踪</h4><p>在单体应用时代，所有服务日志在一个应用中，而在微服务时代，一次请求涉及多个服务，日志追踪就变的十分重要。我们使用springcloud-sleuth组件进行日志追踪管理，所有日志都会有一个traceid，当进行远程调用时，该traceid会被传递到下游服务。我们的日志样例如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">2017-09-01 16:09:56.828  INFO [zuul-server,e3459faf4e4115d8,e3459faf4e4115d8,false] 9 </div><div class="line">--- [nio-8041-exec-1] c.y.f.base.filter.RequestLoggingFilter   : </div><div class="line">After request [method=POST,After request [uri=/api/user-center/device/save;payload=&#123;&quot;deviceToken&quot;:&quot;dd6f96fb3a9c10e6f9087d5ab5291e37&quot;,</div><div class="line">&quot;deviceId&quot;:&quot;CC2165D8-BADC-476F-8ED8-B71A04CC2E41&quot;,&quot;userId&quot;:9,&quot;os&quot;:&quot;IOS&quot;,&quot;appVersion&quot;:&quot;1.5.0&quot;&#125;],</div><div class="line">time=12(ms),code=200]</div></pre></td></tr></table></figure>
-<p>traceid=e3459faf4e4115d8，同时我们记录了每次请求的耗时和httpcode，方便排查问题</p>
-<h4 id="7-监控"><a href="#7-监控" class="headerlink" title="7.监控"></a>7.监控</h4><p>我们所有的微服务使用springboot框架开发，集成了actuator模块，自动暴露了/health，/metrics等接口，通过springboot-admin模块，我们集成了eureka获取了所有模块的列表，通过每个模块的/health，/metrics接口获取模块信息。<br>springboot-admin模块页面如下:<br><img src="http://ovqe8818i.bkt.clouddn.com/WX20170907-092757@2x.png" alt="springboot-admin"><br>通过springboot-admin，我们可以实时观察到每个模块是否存活，健康状态</p>
-<p>每个模块的内容包括：模块信息，调用情况，环境变量，调用情况<br><img src="http://ovqe8818i.bkt.clouddn.com/WX20170907-092832@2x.png" alt="springboot-admin"><br>比较有用的是模块信息，比如启动时间，内存占用等。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/11/backend_share/" data-id="cj816zuoy0001n0bmnss66zsu" class="article-share-link">Share</a>
-      
-      
     </footer>
   </div>
   
@@ -505,7 +507,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/11/algorithm-stock/" data-id="cj816zup00002n0bm7ao5rwsu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/11/algorithm-stock/" data-id="cj8171n5b0000spbmtxnrhrh7" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -552,7 +554,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/04/hello-world/" data-id="cj816zuot0000n0bm7swm8olf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/04/hello-world/" data-id="cj8171n5m0004spbmq3erfp1z" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -569,7 +571,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Catégories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li></ul>
     </div>
@@ -579,9 +581,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队管理/">团队管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发流程/">开发流程</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队管理/">团队管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发流程/">开发流程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
     </div>
   </div>
 
@@ -589,9 +591,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/rpc/" style="font-size: 10px;">rpc</a> <a href="/tags/团队管理/" style="font-size: 10px;">团队管理</a> <a href="/tags/开发流程/" style="font-size: 10px;">开发流程</a>
+      <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/rpc/" style="font-size: 10px;">rpc</a> <a href="/tags/团队管理/" style="font-size: 10px;">团队管理</a> <a href="/tags/开发流程/" style="font-size: 10px;">开发流程</a> <a href="/tags/系统设计/" style="font-size: 10px;">系统设计</a>
     </div>
   </div>
 
@@ -608,9 +610,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/09/26/backend_share/">微服务简介</a>
+          </li>
         
           <li>
             <a href="/2017/09/26/系统调用思考/">系统调用思考</a>
@@ -628,10 +634,6 @@
             <a href="/2017/09/26/mysql性能入门/">mysql性能入门</a>
           </li>
         
-          <li>
-            <a href="/2017/09/11/backend_share/">微服务简介</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -645,7 +647,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
