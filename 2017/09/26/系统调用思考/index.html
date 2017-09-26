@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:系统调用思考 tag:rpc一般系统都会访问外部系统，比如请求支付，会员卡，营销等各种系统，有时候一次请求需要访问多个下游系统，这种情况下失败是避免不了的。这里总结了几个注意事项  访问下游系统必须设置超时时间，一般设置3s，不同业务系统需要进行相应调整 访问下游系统qps必须控制，不能给下游系统压力过大 幂等操作：访问下游失败了，可能是由于网络超时，下游系统已经处理成功。这个时候有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/09/26/系统调用思考/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:系统调用思考 tag:rpc一般系统都会访问外部系统，比如请求支付，会员卡，营销等各种系统，有时候一次请求需要访问多个下游系统，这种情况下失败是避免不了的。这里总结了几个注意事项  访问下游系统必须设置超时时间，一般设置3s，不同业务系统需要进行相应调整 访问下游系统qps必须控制，不能给下游系统压力过大 幂等操作：访问下游失败了，可能是由于网络超时，下游系统已经处理成功。这个时候有">
+<meta property="og:image" content="https://leanote.com/api/file/getImage?fileId=577f5d2dab644135ea003fdf">
+<meta property="og:updated_time" content="2017-09-26T05:43:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:系统调用思考 tag:rpc一般系统都会访问外部系统，比如请求支付，会员卡，营销等各种系统，有时候一次请求需要访问多个下游系统，这种情况下失败是避免不了的。这里总结了几个注意事项  访问下游系统必须设置超时时间，一般设置3s，不同业务系统需要进行相应调整 访问下游系统qps必须控制，不能给下游系统压力过大 幂等操作：访问下游失败了，可能是由于网络超时，下游系统已经处理成功。这个时候有">
+<meta name="twitter:image" content="https://leanote.com/api/file/getImage?fileId=577f5d2dab644135ea003fdf">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-系统调用思考" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/26/系统调用思考/" class="article-date">
+  <time datetime="2017-09-26T05:43:32.000Z" itemprop="datePublished">2017-09-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title:系统调用思考</p>
+<h2 id="tag-rpc"><a href="#tag-rpc" class="headerlink" title="tag:rpc"></a>tag:rpc</h2><p>一般系统都会访问外部系统，比如请求支付，会员卡，营销等各种系统，有时候一次请求需要访问多个下游系统，这种情况下失败是避免不了的。这里总结了几个注意事项</p>
+<ol>
+<li>访问下游系统必须设置超时时间，一般设置3s，不同业务系统需要进行相应调整</li>
+<li>访问下游系统qps必须控制，不能给下游系统压力过大</li>
+<li>幂等操作：访问下游失败了，可能是由于网络超时，下游系统已经处理成功。这个时候有两种方式<ol>
+<li>下游提供查询接口，通过查询判断是否处理成功</li>
+<li>下游提供幂等接口，通过幂等号多次请求下游，下游保证操作幂等</li>
+</ol>
+</li>
+<li>一次请求需要访问多个下游，如果保证多个下游的数据一致性</li>
+</ol>
+<ul>
+<li>通过分布式事务，比较重，而且需要各个下游支持分布式事务接口，比较难实现。</li>
+<li>通过二阶段事务方式访问各个下游，要求也是下游系统需要支持二阶段事务协议，也比较难实现。</li>
+<li>简单依次访问各个下游，如果某个下游访问失败了，可以进行的操作是：<ul>
+<li>简单重试n次，一般是3次。优点是简单，缺点是如果n次不成功，之前访问的系统无法回滚。</li>
+<li>如果n次不成功，有效的方案是落异步任务，然后通过任务无限次重试。优点是可以保证最终一致性。缺点是开发成本大，而且需要下游系统支持幂等。如果下游系统不支持幂等怎么办？我们可以自己为下游系统记录幂等信息，比如我们自己记录一个流水表，记录各个下游系统是否访问成功了。如果成功了就不再访问了</li>
+<li>如果落异步任务成本太高，怎么办？暂时没想到什么好方法，我能想到的就是客户端不断重试调用服务端。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://leanote.com/api/file/getImage?fileId=577f5d2dab644135ea003fdf" alt="img"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/26/系统调用思考/" data-id="cj816f3us000871bm8e9rqsw1" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/26/mysql性能入门/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Catégories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/26/系统调用思考/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/26/mysql性能入门/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/11/backend_share/">微服务简介</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/11/algorithm-stock/">best time to buy and sell stock</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
