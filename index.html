@@ -153,7 +153,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/backend_share/" data-id="cj817i5c20000sybmo7p4ufqu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/26/backend_share/" data-id="cj8186icq0005bsbm1b1q4q55" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
@@ -213,7 +213,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/系统调用思考/" data-id="cj817i5ch0009sybmfhsqxdks" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/26/系统调用思考/" data-id="cj8186icu000absbm9ozy9yhu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpc/">rpc</a></li></ul>
@@ -283,7 +283,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/我脑海中的优秀技术团队/" data-id="cj817i5co000asybmmunas34a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/26/我脑海中的优秀技术团队/" data-id="cj8186id1000cbsbmstpqyzrs" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/团队管理/">团队管理</a></li></ul>
@@ -334,7 +334,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/前后端开发职责/" data-id="cj817i5cb0003sybm6ps0s3g3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/26/前后端开发职责/" data-id="cj8186ics0006bsbmkgef5pey" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/开发流程/">开发流程</a></li></ul>
@@ -372,21 +372,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ol>
+        <ul>
 <li><p>left join，right join，inner join，select in</p>
 <p>最基本的sql语句，连表查询性能并没有想得那么差。尽量避免大表连小表的操作。</p>
 </li>
 <li><p>锁</p>
 <p>mysql的锁有很多类，主要区别在于两点</p>
-<ol>
+<ul>
 <li>锁粒度</li>
 <li>互斥性</li>
-</ol>
+</ul>
 <p>mysql有一下几类锁</p>
 <ol>
 <li>Shared and Exclusive Locks：读写锁</li>
-<li>Intention Locks：意向锁：表或者行级别锁</li>
-<li><ol>
+<li>Intention Locks：意向锁：表或者行级别锁<ol>
 <li><a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="external">SELECT … LOCK IN SHARE MODE</a> IS锁。读锁</li>
 <li><a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="external">SELECT … FOR UPDATE</a> IX锁。写锁</li>
 </ol>
@@ -398,23 +397,21 @@
 </ol>
 </li>
 <li><p>事务</p>
-</li>
-</ol>
-<ol>
-<li>隔离级别<ol>
+<ul>
+<li>隔离级别<ul>
 <li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_read-uncommitted" target="_blank" rel="external">READ UNCOMMITTED</a></li>
 <li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_read-committed" target="_blank" rel="external">READ COMMITTED</a> 阿里云默认，性能好些。不适用gap锁。在扫描数据的时候，会自动释放不符合条件的行锁</li>
 <li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_repeatable-read" target="_blank" rel="external">REPEATABLE READ</a> innodb默认级别，mvcc，使用next-key lock</li>
 <li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_serializable" target="_blank" rel="external">SERIALIZABLE</a> 串行化</li>
-</ol>
+</ul>
 </li>
-<li>Locking Reads<ol>
+<li>Locking Reads<ul>
 <li>share mode：SELECT … LOCK IN SHARE MODE。共享读锁</li>
 <li>exclusive mode：SELECT … FOR UPDATE。排他锁</li>
-</ol>
+</ul>
 </li>
-</ol>
-<ol>
+</ul>
+</li>
 <li><p>索引：</p>
 <ol>
 <li>聚簇索引：索引和数据一起存储，读取效率高</li>
@@ -422,12 +419,12 @@
 <li>主键uuid vs auto_increment bigint：二级索引存的是主键值，uuid太大。读取磁盘速度慢。索引不连续</li>
 </ol>
 </li>
-</ol>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/mysql性能入门/" data-id="cj817i5ce0005sybmjm00f0tl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/26/mysql性能入门/" data-id="cj8186icg0000bsbmp6kzvfev" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
@@ -504,7 +501,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/11/algorithm-stock/" data-id="cj817i5cc0004sybm28mie3r6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/11/algorithm-stock/" data-id="cj8186icp0004bsbmeufquxfc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -551,7 +548,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/04/hello-world/" data-id="cj817i5c70001sybmrkj7trek" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/04/hello-world/" data-id="cj8186icl0001bsbmz87t9rxj" class="article-share-link">Share</a>
       
       
     </footer>
