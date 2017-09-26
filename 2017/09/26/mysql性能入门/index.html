@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:mysql性能入门tags:mysqlcategories:mysql  left join，right join，inner join，select in 最基本的sql语句，连表查询性能并没有想得那么差。尽量避免大表连小表的操作。  锁 mysql的锁有很多类，主要区别在于两点  锁粒度 互斥性  mysql有一下几类锁  Shared and Exclusive Locks：读写">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/09/26/mysql性能入门/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:mysql性能入门tags:mysqlcategories:mysql  left join，right join，inner join，select in 最基本的sql语句，连表查询性能并没有想得那么差。尽量避免大表连小表的操作。  锁 mysql的锁有很多类，主要区别在于两点  锁粒度 互斥性  mysql有一下几类锁  Shared and Exclusive Locks：读写">
+<meta property="og:updated_time" content="2017-09-26T05:32:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:mysql性能入门tags:mysqlcategories:mysql  left join，right join，inner join，select in 最基本的sql语句，连表查询性能并没有想得那么差。尽量避免大表连小表的操作。  锁 mysql的锁有很多类，主要区别在于两点  锁粒度 互斥性  mysql有一下几类锁  Shared and Exclusive Locks：读写">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-mysql性能入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/26/mysql性能入门/" class="article-date">
+  <time datetime="2017-09-26T02:13:51.000Z" itemprop="datePublished">2017-09-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:mysql性能入门<br>tags:mysql<br>categories:mysql</p>
+<ol>
+<li><p>left join，right join，inner join，select in</p>
+<p>最基本的sql语句，连表查询性能并没有想得那么差。尽量避免大表连小表的操作。</p>
+</li>
+<li><p>锁</p>
+<p>mysql的锁有很多类，主要区别在于两点</p>
+<ol>
+<li>锁粒度</li>
+<li>互斥性</li>
+</ol>
+<p>mysql有一下几类锁</p>
+<ol>
+<li>Shared and Exclusive Locks：读写锁</li>
+<li>Intention Locks：意向锁：表或者行级别锁</li>
+<li><ol>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="external">SELECT … LOCK IN SHARE MODE</a> IS锁。读锁</li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="external">SELECT … FOR UPDATE</a> IX锁。写锁</li>
+</ol>
+</li>
+<li>行级锁：用于锁定某一行数据，粒度</li>
+<li>gap索引: 范围锁，a gap between index records, or a lock on the gap before the first or after the last index record。在read_repeatable级别有效，read_commited无效</li>
+<li>Next-Key Locks: 行锁+gap锁，在read_repeatable级别有效，read_commited无效</li>
+<li>Insert Intention Locks: 插入索引</li>
+</ol>
+</li>
+<li><p>事务</p>
+</li>
+<li><ol>
+<li>隔离级别</li>
+<li><ol>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_read-uncommitted" target="_blank" rel="external">READ UNCOMMITTED</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_read-committed" target="_blank" rel="external">READ COMMITTED</a>：阿里云默认，性能好些。不适用gap锁。在扫描数据的时候，会自动释放不符合条件的行锁</li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_repeatable-read" target="_blank" rel="external">REPEATABLE READ</a>，innodb默认级别，mvcc，使用next-key lock</li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_serializable" target="_blank" rel="external">SERIALIZABLE</a>：串行化</li>
+</ol>
+</li>
+<li>Locking Reads：<ol>
+<li>share mode：SELECT … LOCK IN SHARE MODE。共享读锁</li>
+<li>exclusive mode：SELECT … FOR UPDATE。排他锁</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>索引：</p>
+<ol>
+<li>聚簇索引：索引和数据一起存储，读取效率高</li>
+<li>二级索引：存储聚簇索引，读两次磁盘</li>
+<li>主键uuid vs auto_increment bigint：二级索引存的是主键值，uuid太大。读取磁盘速度慢。索引不连续</li>
+</ol>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/26/mysql性能入门/" data-id="cj8162kqy0005kqbm96eniulj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/11/backend_share/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">微服务简介</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/26/mysql性能入门/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/11/backend_share/">微服务简介</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/11/algorithm-stock/">best time to buy and sell stock</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

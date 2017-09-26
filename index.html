@@ -61,6 +61,84 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-mysql性能入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/26/mysql性能入门/" class="article-date">
+  <time datetime="2017-09-26T02:13:51.000Z" itemprop="datePublished">2017-09-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:mysql性能入门<br>tags:mysql<br>categories:mysql</p>
+<ol>
+<li><p>left join，right join，inner join，select in</p>
+<p>最基本的sql语句，连表查询性能并没有想得那么差。尽量避免大表连小表的操作。</p>
+</li>
+<li><p>锁</p>
+<p>mysql的锁有很多类，主要区别在于两点</p>
+<ol>
+<li>锁粒度</li>
+<li>互斥性</li>
+</ol>
+<p>mysql有一下几类锁</p>
+<ol>
+<li>Shared and Exclusive Locks：读写锁</li>
+<li>Intention Locks：意向锁：表或者行级别锁</li>
+<li><ol>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="external">SELECT … LOCK IN SHARE MODE</a> IS锁。读锁</li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="external">SELECT … FOR UPDATE</a> IX锁。写锁</li>
+</ol>
+</li>
+<li>行级锁：用于锁定某一行数据，粒度</li>
+<li>gap索引: 范围锁，a gap between index records, or a lock on the gap before the first or after the last index record。在read_repeatable级别有效，read_commited无效</li>
+<li>Next-Key Locks: 行锁+gap锁，在read_repeatable级别有效，read_commited无效</li>
+<li>Insert Intention Locks: 插入索引</li>
+</ol>
+</li>
+<li><p>事务</p>
+</li>
+<li><ol>
+<li>隔离级别</li>
+<li><ol>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_read-uncommitted" target="_blank" rel="external">READ UNCOMMITTED</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_read-committed" target="_blank" rel="external">READ COMMITTED</a>：阿里云默认，性能好些。不适用gap锁。在扫描数据的时候，会自动释放不符合条件的行锁</li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_repeatable-read" target="_blank" rel="external">REPEATABLE READ</a>，innodb默认级别，mvcc，使用next-key lock</li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_serializable" target="_blank" rel="external">SERIALIZABLE</a>：串行化</li>
+</ol>
+</li>
+<li>Locking Reads：<ol>
+<li>share mode：SELECT … LOCK IN SHARE MODE。共享读锁</li>
+<li>exclusive mode：SELECT … FOR UPDATE。排他锁</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>索引：</p>
+<ol>
+<li>聚簇索引：索引和数据一起存储，读取效率高</li>
+<li>二级索引：存储聚簇索引，读两次磁盘</li>
+<li>主键uuid vs auto_increment bigint：二级索引存的是主键值，uuid太大。读取磁盘速度慢。索引不连续</li>
+</ol>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/26/mysql性能入门/" data-id="cj8162kqy0005kqbm96eniulj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-backend_share" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/09/11/backend_share/" class="article-date">
@@ -156,7 +234,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/11/backend_share/" data-id="cj7fz1mpk0000hbbmwr6ag1qa" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/11/backend_share/" data-id="cj8162kqw0004kqbmel67hx12" class="article-share-link">Share</a>
       
       
     </footer>
@@ -231,7 +309,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/11/algorithm-stock/" data-id="cj7fz1mpr0002hbbmitixgiib" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/11/algorithm-stock/" data-id="cj8162kql0000kqbmoew5iwqh" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -278,7 +356,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/04/hello-world/" data-id="cj7fz1mpp0001hbbmhdyk14ke" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/04/hello-world/" data-id="cj8162kqq0001kqbmt31e7yui" class="article-share-link">Share</a>
       
       
     </footer>
@@ -337,6 +415,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/09/26/mysql性能入门/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2017/09/11/backend_share/">微服务简介</a>
