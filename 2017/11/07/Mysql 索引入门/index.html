@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title: mysql索引入门tags: mysqlcategories: mysql Mysql索引入门 什么是索引 索引用于快速找出在某个列中有一特定值的行  索引类型 大多数MySQL索引(PRIMARY KEY、UNIQUE、INDEX和FULLTEXT)在B树中存储。只是空间列类型的索引使用R-树，并且MEMORY表还支持hash索引  索引越多越好？  数据的变更（增删改）都需要维护">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/11/07/Mysql 索引入门/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title: mysql索引入门tags: mysqlcategories: mysql Mysql索引入门 什么是索引 索引用于快速找出在某个列中有一特定值的行  索引类型 大多数MySQL索引(PRIMARY KEY、UNIQUE、INDEX和FULLTEXT)在B树中存储。只是空间列类型的索引使用R-树，并且MEMORY表还支持hash索引  索引越多越好？  数据的变更（增删改）都需要维护">
+<meta property="og:updated_time" content="2017-11-07T09:09:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title: mysql索引入门tags: mysqlcategories: mysql Mysql索引入门 什么是索引 索引用于快速找出在某个列中有一特定值的行  索引类型 大多数MySQL索引(PRIMARY KEY、UNIQUE、INDEX和FULLTEXT)在B树中存储。只是空间列类型的索引使用R-树，并且MEMORY表还支持hash索引  索引越多越好？  数据的变更（增删改）都需要维护">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS-каналы"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Поиск"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Mysql 索引入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/07/Mysql 索引入门/" class="article-date">
+  <time datetime="2017-11-07T03:15:38.000Z" itemprop="datePublished">2017-11-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title: mysql索引入门<br>tags: mysql<br>categories: mysql</p>
+<h3 id="Mysql索引入门"><a href="#Mysql索引入门" class="headerlink" title="Mysql索引入门"></a>Mysql索引入门</h3><ol>
+<li><p>什么是索引</p>
+<p>索引用于快速找出在某个列中有一特定值的行</p>
+</li>
+<li><p>索引类型</p>
+<p>大多数MySQL索引(PRIMARY KEY、UNIQUE、INDEX和FULLTEXT)在B树中存储。只是空间列类型的索引使用R-树，并且MEMORY表还支持hash索引</p>
+</li>
+<li><p>索引越多越好？</p>
+<ul>
+<li>数据的变更（增删改）都需要维护索引，因此更多的索引意味着<strong>更多的维护成本</strong></li>
+<li>更多的索引意味着也需<strong>要更多的空间</strong> （一本100页的书，却有50页目录？）</li>
+<li>过小的表，建索引可能会更慢</li>
+<li>频繁写入影响性能</li>
+</ul>
+</li>
+<li><p>使用索引</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">like &apos;xxx%&apos;   -- 可以用索引</div><div class="line">Like &apos;%xxx%&apos;  -- 不能用索引</div><div class="line">like &apos;%xxx&apos;   -- 不能用索引</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;，&lt;=，=，&gt;，&gt;=，BETWEEN，IN 	-- 可以用索引</div><div class="line">&lt;&gt;，not in ，！=则不行  -- 不能用索引</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SELECT `sname` FROM `t_stu` WHERE `age`=20; 	-- 会使用索引</div><div class="line">SELECT `sname` FROM `t_stu` WHERE `age`+10=30; 	-- 不会使用索引！！因为所有索引列参与了计算</div><div class="line">SELECT `sname` FROM `t_stu` WHERE `age`=30-10;	-- 会使用索引</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SELECT `sname` FROM `stu` WHERE concat(`sname`,&apos;abc&apos;) =&apos;Jaskeyabc&apos;; -- 不会使用索引,因为使用了函数运算,原理与上面相同</div><div class="line">SELECT `sname` FROM `stu` WHERE `sname` =concat(&apos;Jaskey&apos;,&apos;abc&apos;); -- 会使用索引</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select * from dept where dname=&apos;jaskey&apos; or loc=&apos;bj&apos; or deptno=45 --如果条件中有or,即使其中有条件带索引也不会使用。换言之,就是要求使用的所有字段,都必须建立索引</div><div class="line">可以通过union来替换or</div><div class="line">select * from dept where dname=&apos;jaskey&apos; union</div><div class="line">select * from dept where loc=&apos;bj&apos; union</div><div class="line">select * from dept where deptno=45</div></pre></td></tr></table></figure>
+</li>
+<li><p>什么样的字段适合建索引</p>
+<ul>
+<li>唯一性太差的字段不适合单独创建索引，即使频繁作为查询条件</li>
+<li>较频繁的作为查询条件的字段应该创建索引</li>
+</ul>
+</li>
+<li><p>什么时候用复合索引</p>
+<p>where a = x and b =xx 是建立索引a，索引b，索引ab，索引ba？</p>
+<p>看区分度</p>
+</li>
+<li><p>最左前缀原则</p>
+<p>复合索引（a,b,c），可以用到索引的情况是</p>
+<p>where a=x and b=x and c=x</p>
+<p>where a=x and b=x</p>
+<p>where a=x</p>
+<p>其余where条件都不能用到索引</p>
+</li>
+<li><p>order by 索引</p>
+<p>单独使用order by是不能用索引的，需要配合limit</p>
+<p>where+orderby时需要加复合索引，比如where a=x order by b,c需要加（a,b,c）索引</p>
+</li>
+<li><p>不要过早优化，除非仔细分析</p>
+<p>explain工具</p>
+<p>​</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/07/Mysql 索引入门/" data-id="cj9peaul00000q1bmt0t5tdqn" class="article-share-link">Поделиться</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/10/30/okr/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Предыдущий</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Категории</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Метки</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队管理/">团队管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发流程/">开发流程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Облако меток</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/rpc/" style="font-size: 10px;">rpc</a> <a href="/tags/团队管理/" style="font-size: 10px;">团队管理</a> <a href="/tags/开发流程/" style="font-size: 10px;">开发流程</a> <a href="/tags/系统设计/" style="font-size: 10px;">系统设计</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Архив</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Недавние записи</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/11/07/Mysql 索引入门/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/30/okr/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/26/backend_share/">微服务简介</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/26/系统调用思考/">系统调用思考</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/26/我脑海中的优秀技术团队/">我脑海中的优秀技术团队</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Создано с помощью <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

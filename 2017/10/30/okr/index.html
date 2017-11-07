@@ -3,14 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Метка: 系统设计 | Hexo</title>
+  <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="目标：系统稳定性：99.95%实际：10.12日系统崩溃2小时左右，造成系统稳定性降低到99.978% 得分：0.3 不足监控不够精细 线上mysql配置预估不足，造成性能有瓶颈 部署隔离不够完善，造成全局影响 没有压力测试 后续目标 线上稳定性（包括发布和运行）：0.3：99.95%，0.7 ：99.99% 1：99.995% java每周每人单测：0.3：&amp;gt;=5个  0.7: &amp;gt;=">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/tags/系统设计/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/10/30/okr/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目标：系统稳定性：99.95%实际：10.12日系统崩溃2小时左右，造成系统稳定性降低到99.978% 得分：0.3 不足监控不够精细 线上mysql配置预估不足，造成性能有瓶颈 部署隔离不够完善，造成全局影响 没有压力测试 后续目标 线上稳定性（包括发布和运行）：0.3：99.95%，0.7 ：99.99% 1：99.995% java每周每人单测：0.3：&amp;gt;=5个  0.7: &amp;gt;=">
+<meta property="og:updated_time" content="2017-10-30T05:51:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="目标：系统稳定性：99.95%实际：10.12日系统崩溃2小时左右，造成系统稳定性降低到99.978% 得分：0.3 不足监控不够精细 线上mysql配置预估不足，造成性能有瓶颈 部署隔离不够完善，造成全局影响 没有压力测试 后续目标 线上稳定性（包括发布和运行）：0.3：99.95%，0.7 ：99.99% 1：99.995% java每周每人单测：0.3：&amp;gt;=5个  0.7: &amp;gt;=">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -59,39 +63,67 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/26/backend_share/" class="archive-article-date">
-  <time datetime="2017-09-26T06:14:03.000Z" itemprop="datePublished">Sep 26</time>
+        <section id="main"><article id="post-okr" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/30/okr/" class="article-date">
+  <time datetime="2017-10-30T05:51:26.000Z" itemprop="datePublished">2017-10-30</time>
 </a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/26/backend_share/">微服务简介</a>
-    </h1>
-  
-
-    </header>
+    
   </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="目标：系统稳定性：99-95"><a href="#目标：系统稳定性：99-95" class="headerlink" title="目标：系统稳定性：99.95%"></a>目标：系统稳定性：99.95%</h3><p>实际：10.12日系统崩溃2小时左右，造成系统稳定性降低到99.978%</p>
+<p>得分：0.3</p>
+<h3 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h3><p>监控不够精细</p>
+<p>线上mysql配置预估不足，造成性能有瓶颈</p>
+<p>部署隔离不够完善，造成全局影响</p>
+<p>没有压力测试</p>
+<h3 id="后续目标"><a href="#后续目标" class="headerlink" title="后续目标"></a>后续目标</h3><ol>
+<li>线上稳定性（包括发布和运行）：0.3：99.95%，0.7 ：99.99% 1：99.995%</li>
+<li>java每周每人单测：0.3：&gt;=5个  0.7: &gt;=15个  1: &gt;=30个</li>
+<li>单测覆盖率 0.3: 50%，0.7:80%，1:100%</li>
+<li>每个函数行数：0.3 20行 0.7 5行 1:1行</li>
+<li>线上P1bug数量: 0.3：2个 0.7：1个，1：0个</li>
+<li>接口C端平均响应时间：0.3：200ms，0.7：100ms，1：50ms</li>
+<li>接口后台平均响应时间：0.3：500ms，0.7：200ms，1：100ms</li>
+<li>线上C端平均sql执行时间：0.3: 50ms, 0.7 25ms, 1:10ms</li>
+<li>线上后台sql最大执行时间：0.3：300ms，0.7：100ms，1：50ms</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/10/30/okr/" data-id="cj9peaul80002q1bm5y1nv2ot" class="article-share-link">Поделиться</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/11/07/Mysql 索引入门/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Следующий</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/09/26/backend_share/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Предыдущий</strong>
+      <div class="article-nav-title">微服务简介</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 </section>
         
