@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/11/07/Mysql 索引入门/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Mysql索引入门 什么是索引 索引用于快速找出在某个列中有一特定值的行  索引类型 大多数MySQL索引(PRIMARY KEY、UNIQUE、INDEX和FULLTEXT)在B树中存储。只是空间列类型的索引使用R-树，并且MEMORY表还支持hash索引  索引越多越好？  数据的变更（增删改）都需要维护索引，因此更多的索引意味着更多的维护成本 更多的索引意味着也需要更多的空间 （一本100页">
-<meta property="og:updated_time" content="2017-11-07T09:17:33.000Z">
+<meta property="og:updated_time" content="2017-11-09T06:11:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql索引入门">
 <meta name="twitter:description" content="Mysql索引入门 什么是索引 索引用于快速找出在某个列中有一特定值的行  索引类型 大多数MySQL索引(PRIMARY KEY、UNIQUE、INDEX和FULLTEXT)在B树中存储。只是空间列类型的索引使用R-树，并且MEMORY表还支持hash索引  索引越多越好？  数据的变更（增删改）都需要维护索引，因此更多的索引意味着更多的维护成本 更多的索引意味着也需要更多的空间 （一本100页">
@@ -53,9 +53,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -135,14 +135,22 @@
 </li>
 <li><p>不要过早优化，除非仔细分析</p>
 <p>explain工具</p>
-<p>​</p>
+</li>
+<li><p>Case Study </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"> CREATE TABLEt_cms_comment` (</div><div class="line"></div><div class="line">  id bigint(20) NOT NULL AUTO_INCREMENT,</div><div class="line"></div><div class="line">  content text,</div><div class="line"></div><div class="line">  create_time timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),</div><div class="line"></div><div class="line">  platform_id int(11) DEFAULT NULL,</div><div class="line"></div><div class="line">  update_time timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),</div><div class="line"></div><div class="line">  target_type varchar(30) DEFAULT NULL,</div><div class="line"></div><div class="line">  target_id bigint(20) DEFAULT NULL,</div><div class="line"></div><div class="line">  content_type varchar(30) DEFAULT NULL,</div><div class="line"></div><div class="line">  interaction_type varchar(30) DEFAULT NULL,</div><div class="line"></div><div class="line">  user_id bigint(20) DEFAULT NULL,</div><div class="line"></div><div class="line">  variety varchar(255) DEFAULT NULL,</div><div class="line"></div><div class="line">  variety_id bigint(20) DEFAULT NULL,</div><div class="line"></div><div class="line">  create_user bigint(20) DEFAULT NULL,</div><div class="line"></div><div class="line">  deleted int(11) DEFAULT NULL,</div><div class="line"></div><div class="line">  update_user bigint(20) DEFAULT NULL,</div><div class="line"></div><div class="line">  audit_state varchar(30) DEFAULT NULL,</div><div class="line"></div><div class="line">  author_type varchar(30) DEFAULT NULL,</div><div class="line"></div><div class="line">  is_top bit(1) DEFAULT NULL,</div><div class="line"></div><div class="line">  top_priority bigint(20) DEFAULT NULL,</div><div class="line"></div><div class="line">  audit_user bigint(20) DEFAULT NULL,</div><div class="line"></div><div class="line">  audit_time timestamp NULL DEFAULT NULL,</div><div class="line"></div><div class="line">  re_audit_user bigint(20) DEFAULT NULL,</div><div class="line"></div><div class="line">  PRIMARY KEY (id)</div><div class="line"></div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</div></pre></td></tr></table></figure>
+<p>select * from t_cms_comment where create_time &lt; ‘2017-11-09 10:00:00’ and variety_id=5 and variety=’studio’ order by top_priority desc ,create_time desc, id desc limit 200     —  怎么加索引？</p>
+<ul>
+<li>where create_time &lt; ‘2017-11-09 10:00:00’ and variety_id=5 and variety=’studio’ </li>
+<li>order by : top_priority desc ,create_time desc, id desc</li>
+<li>where + order by 复合索引，如果不行，优先考虑对sort建立索引，因为sort比较耗性能</li>
+</ul>
 </li>
 </ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/07/Mysql 索引入门/" data-id="cj9pekgai0000hwbmjb6fxbzf" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/11/07/Mysql 索引入门/" data-id="cj9s2seht000483bmf4ir9vdy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
@@ -155,7 +163,7 @@
   
   
     <a href="/2017/09/26/backend_share/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ancien</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">微服务简介</div>
     </a>
   
@@ -170,7 +178,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Catégories</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li></ul>
     </div>
@@ -180,7 +188,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队管理/">团队管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发流程/">开发流程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
     </div>
@@ -190,7 +198,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/rpc/" style="font-size: 10px;">rpc</a> <a href="/tags/团队管理/" style="font-size: 10px;">团队管理</a> <a href="/tags/开发流程/" style="font-size: 10px;">开发流程</a> <a href="/tags/系统设计/" style="font-size: 10px;">系统设计</a>
     </div>
@@ -209,7 +217,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -246,7 +254,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 John Doe<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
