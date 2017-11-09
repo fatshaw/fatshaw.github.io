@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/11/07/Mysql 索引入门/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Mysql索引入门 什么是索引 索引用于快速找出在某个列中有一特定值的行  索引类型 大多数MySQL索引(PRIMARY KEY、UNIQUE、INDEX和FULLTEXT)在B树中存储。只是空间列类型的索引使用R-树，并且MEMORY表还支持hash索引  索引越多越好？  数据的变更（增删改）都需要维护索引，因此更多的索引意味着更多的维护成本 更多的索引意味着也需要更多的空间 （一本100页">
-<meta property="og:updated_time" content="2017-11-09T06:11:11.000Z">
+<meta property="og:updated_time" content="2017-11-09T06:17:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql索引入门">
 <meta name="twitter:description" content="Mysql索引入门 什么是索引 索引用于快速找出在某个列中有一特定值的行  索引类型 大多数MySQL索引(PRIMARY KEY、UNIQUE、INDEX和FULLTEXT)在B树中存储。只是空间列类型的索引使用R-树，并且MEMORY表还支持hash索引  索引越多越好？  数据的变更（增删改）都需要维护索引，因此更多的索引意味着更多的维护成本 更多的索引意味着也需要更多的空间 （一本100页">
@@ -133,6 +133,9 @@
 <p>单独使用order by是不能用索引的，需要配合limit</p>
 <p>where+orderby时需要加复合索引，比如where a=x order by b,c需要加（a,b,c）索引</p>
 </li>
+<li><p>当有多个索引，选择哪个</p>
+<p>mysql 会自动选择返回集合小的索引</p>
+</li>
 <li><p>不要过早优化，除非仔细分析</p>
 <p>explain工具</p>
 </li>
@@ -150,7 +153,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/07/Mysql 索引入门/" data-id="cj9s2seht000483bmf4ir9vdy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/07/Mysql 索引入门/" data-id="cj9s30ows0001prbmrl7p1hh6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
