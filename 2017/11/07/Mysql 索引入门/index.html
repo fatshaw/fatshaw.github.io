@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/11/07/Mysql 索引入门/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Mysql索引入门 什么是索引 索引用于快速找出在某个列中有一特定值的行  索引类型 大多数MySQL索引(PRIMARY KEY、UNIQUE、INDEX和FULLTEXT)在B树中存储。只是空间列类型的索引使用R-树，并且MEMORY表还支持hash索引  索引越多越好？  数据的变更（增删改）都需要维护索引，因此更多的索引意味着更多的维护成本 更多的索引意味着也需要更多的空间 （一本100页">
-<meta property="og:updated_time" content="2017-11-09T06:17:51.000Z">
+<meta property="og:updated_time" content="2017-11-09T06:24:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql索引入门">
 <meta name="twitter:description" content="Mysql索引入门 什么是索引 索引用于快速找出在某个列中有一特定值的行  索引类型 大多数MySQL索引(PRIMARY KEY、UNIQUE、INDEX和FULLTEXT)在B树中存储。只是空间列类型的索引使用R-树，并且MEMORY表还支持hash索引  索引越多越好？  数据的变更（增删改）都需要维护索引，因此更多的索引意味着更多的维护成本 更多的索引意味着也需要更多的空间 （一本100页">
@@ -146,6 +146,7 @@
 <li>where create_time &lt; ‘2017-11-09 10:00:00’ and variety_id=5 and variety=’studio’ </li>
 <li>order by : top_priority desc ,create_time desc, id desc</li>
 <li>where + order by 复合索引，如果不行，优先考虑对sort建立索引，因为sort比较耗性能</li>
+<li>可能索引：(top_priority+create_time+id), (create_time+varierty_id),(variety_id)</li>
 </ul>
 </li>
 </ol>
@@ -153,7 +154,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/07/Mysql 索引入门/" data-id="cj9s30ows0001prbmrl7p1hh6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/07/Mysql 索引入门/" data-id="cj9s38z4000017gbmxj29s6bs" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
