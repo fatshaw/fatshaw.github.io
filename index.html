@@ -48,9 +48,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -99,7 +99,9 @@
 <p>解决分布式一致性问题</p>
 <p>PoW：Proof of Work。计算一个hash值，小于一个特定的数值，当掌握超过51%的计算，即可控制区块链网络。缺点是慢</p>
 <p>PoS：Proof of Stake。权益证明，解决Pow浪费资源问题。获得的权益越多，获得记账的概率越大</p>
-<p>PBFT：拜占庭算法</p>
+<p>PBFT：实用拜占庭容错算法。至少4个节点，n为节点个数，f为可以出错的节点个数，当满足n&gt;3f+1则PBFT算法可以保证节点达到共识。速度比较快</p>
+<p>Paxos: 过于复杂。。。</p>
+<p>Raft：简易版paxos，leader，follower，candidate。通过投票选举leader，超过一半的节点认同即可成为leader。follower通过log同步leader数据</p>
 </li>
 <li><p>区块链合并</p>
 <p>如果同一个时刻有多个人在修改一个区块链，取长度最长的那个区块链</p>
@@ -122,6 +124,7 @@
 <h3 id="区块链、以太坊"><a href="#区块链、以太坊" class="headerlink" title="区块链、以太坊"></a>区块链、以太坊</h3><p>比特币使用了区块链技术，而以太坊是区块链技术的一个实现平台</p>
 <p>从交易延伸到了智能合约</p>
 <h3 id="开放问题"><a href="#开放问题" class="headerlink" title="开放问题"></a>开放问题</h3><p><strong><em>为什么比特币要挖矿</em></strong></p>
+<p><strong><em>比特币为什么使用PoW共识算法</em></strong></p>
 <h3 id="简易版区块链"><a href="#简易版区块链" class="headerlink" title="简易版区块链"></a>简易版区块链</h3><ul>
 <li>需求1：简单区块链</li>
 </ul>
@@ -169,11 +172,16 @@
 <p><a href="https://medium.com/@mycoralhealth/code-your-own-blockchain-in-less-than-200-lines-of-go-e296282bcffc" target="_blank" rel="external">https://medium.com/@mycoralhealth/code-your-own-blockchain-in-less-than-200-lines-of-go-e296282bcffc</a></p>
 <p><a href="http://www.infoq.com/cn/articles/bitcoin-and-block-chain-part02" target="_blank" rel="external">http://www.infoq.com/cn/articles/bitcoin-and-block-chain-part02</a>  Pow</p>
 <p><a href="https://blockchain.info/" target="_blank" rel="external">https://blockchain.info/</a></p>
+<p><a href="http://www.ey.com/Publication/vwLUAssets/ey-blockchain-platform-research-and-analysis-cn/$FILE/ey-blockchain-platform-research-and-analysis-cn.pdf" target="_blank" rel="external">http://www.ey.com/Publication/vwLUAssets/ey-blockchain-platform-research-and-analysis-cn/$FILE/ey-blockchain-platform-research-and-analysis-cn.pdf</a></p>
+<h3 id="开放问题答案"><a href="#开放问题答案" class="headerlink" title="开放问题答案"></a>开放问题答案</h3><p><strong><em>为什么比特币要挖矿</em></strong></p>
+<p>货币的本质是购买力，如果货币被不断增发，其所代表的购买力将不断下降，就会出现通货。比特币原本的目的是为了解决通货的问题。为了保证比特币的稀缺性，比特币作者使用算力来体现稀缺性，所以需要挖矿才能产生比特币</p>
+<p><strong><em>比特币为什么使用PoW共识算法</em></strong></p>
+<p>因为是公网环境，网络情况不稳定，安全性较差，所以PoW是一种相对公平可以达到一致性的算法，虽然效率较低。相比PoS，PBFT，Raft等算法性能会高很多。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/区块链简介/" data-id="cjeqo6h50000fo4bmwv2qtl5v" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/28/区块链简介/" data-id="cjequn9bq000cy8bmjl29f789" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
@@ -241,7 +249,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/02/bash多行注释/" data-id="cjeqo6h4p0005o4bmw8yquper" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/02/bash多行注释/" data-id="cjequn9bb0001y8bmfpmvbdbq" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bash/">bash</a></li></ul>
@@ -343,7 +351,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/07/Mysql 索引入门/" data-id="cjeqo6h4f0000o4bm0wchntzl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/07/Mysql 索引入门/" data-id="cjequn9bg0004y8bm76otkxmc" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
@@ -483,7 +491,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/backend_share/" data-id="cjeqo6h4n0004o4bmm4pleiob" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/26/backend_share/" data-id="cjequn9bn000ay8bm3p1g2x9d" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
@@ -543,7 +551,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/系统调用思考/" data-id="cjeqo6h52000lo4bml51shw5y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/26/系统调用思考/" data-id="cjequn9bu000hy8bmlvhhrtt4" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpc/">rpc</a></li></ul>
@@ -613,7 +621,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/我脑海中的优秀技术团队/" data-id="cjeqo6h51000io4bmmmt9hhbc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/26/我脑海中的优秀技术团队/" data-id="cjequn9c1000ky8bm9cimk3uf" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/团队管理/">团队管理</a></li></ul>
@@ -664,7 +672,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/前后端开发职责/" data-id="cjeqo6h4y000co4bmg67jby3x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/26/前后端开发职责/" data-id="cjequn9bs000fy8bm94facdxm" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/开发流程/">开发流程</a></li></ul>
@@ -754,7 +762,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/mysql性能入门/" data-id="cjeqo6h4s000ao4bm161zgznu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/26/mysql性能入门/" data-id="cjequn9bl0006y8bm9wqgkytg" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
@@ -831,7 +839,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/11/algorithm-stock/" data-id="cjeqo6h4j0001o4bmpfrexyq8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/11/algorithm-stock/" data-id="cjequn9b70000y8bm7egj01nl" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -878,7 +886,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/04/hello-world/" data-id="cjeqo6h4q0006o4bml5v4yssw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/04/hello-world/" data-id="cjequn9bk0005y8bmtjgiq6e2" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -895,7 +903,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Catégories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li></ul>
     </div>
@@ -905,7 +913,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队管理/">团队管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发流程/">开发流程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
     </div>
@@ -915,7 +923,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
       <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/bash/" style="font-size: 10px;">bash</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/rpc/" style="font-size: 10px;">rpc</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/团队管理/" style="font-size: 10px;">团队管理</a> <a href="/tags/开发流程/" style="font-size: 10px;">开发流程</a> <a href="/tags/系统设计/" style="font-size: 10px;">系统设计</a>
     </div>
@@ -934,7 +942,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -971,7 +979,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
