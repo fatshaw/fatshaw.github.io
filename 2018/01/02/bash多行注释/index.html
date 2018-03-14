@@ -53,9 +53,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -89,12 +89,12 @@
         <h3 id="Bash-多行注释"><a href="#Bash-多行注释" class="headerlink" title="Bash 多行注释"></a>Bash 多行注释</h3><ul>
 <li>传统的C语言多行注释</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line">this is a comment</div><div class="line">this is a comment again</div><div class="line">this is another comment </div><div class="line">*/</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">this is a comment</span><br><span class="line">this is a comment again</span><br><span class="line">this is another comment </span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
 <ul>
 <li>bash多行注释</li>
 </ul>
 <p>那么在bash环境中要怎么做呢？可以这样做：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">:&lt;&lt;\true</div><div class="line">  ls</div><div class="line">  read</div><div class="line">  `read`</div><div class="line">true</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">:&lt;&lt;\true</span><br><span class="line">  ls</span><br><span class="line">  read</span><br><span class="line">  `read`</span><br><span class="line">true</span><br></pre></td></tr></table></figure>
 <p>这里涉及到两个unix知识点</p>
 <ul>
 <li><p>Here Document</p>
@@ -110,9 +110,9 @@
 <li><p>关闭注释</p>
 <p>上面这段bash只修改一行就可以开关注释，要怎么做？</p>
 <p>我们知道bash中单行注释通过#，那么如果把here document 注释了需要注释here document头尾两行。如下代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">#:&lt;&lt;\true</div><div class="line">  ls</div><div class="line">  read</div><div class="line">  `read`</div><div class="line">#true</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">#:&lt;&lt;\true</span><br><span class="line">  ls</span><br><span class="line">  read</span><br><span class="line">  `read`</span><br><span class="line">#true</span><br></pre></td></tr></table></figure>
 <p>但是我们代码末尾的分隔符是true，所以其实不注释也没问题，执行不会有任何报错。所以只要注释here document的行首即可，代码如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">#:&lt;&lt;\true</div><div class="line">  ls</div><div class="line">  read</div><div class="line">  `read`</div><div class="line">true</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">#:&lt;&lt;\true</span><br><span class="line">  ls</span><br><span class="line">  read</span><br><span class="line">  `read`</span><br><span class="line">true</span><br></pre></td></tr></table></figure>
 <p>​</p>
 </li>
 </ul>
@@ -120,7 +120,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/02/bash多行注释/" data-id="cjequn9bb0001y8bmfpmvbdbq" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/01/02/bash多行注释/" data-id="cjequx4rd00012vbms54d3xpq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bash/">bash</a></li></ul>
@@ -132,7 +132,7 @@
 <nav id="article-nav">
   
     <a href="/2018/02/28/区块链简介/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Récent</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           区块链简介
@@ -142,7 +142,7 @@
   
   
     <a href="/2017/11/07/Mysql 索引入门/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ancien</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">mysql索引入门</div>
     </a>
   
@@ -157,7 +157,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Catégories</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li></ul>
     </div>
@@ -167,7 +167,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队管理/">团队管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发流程/">开发流程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
     </div>
@@ -177,7 +177,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/bash/" style="font-size: 10px;">bash</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/rpc/" style="font-size: 10px;">rpc</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/团队管理/" style="font-size: 10px;">团队管理</a> <a href="/tags/开发流程/" style="font-size: 10px;">开发流程</a> <a href="/tags/系统设计/" style="font-size: 10px;">系统设计</a>
     </div>
@@ -196,7 +196,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -233,7 +233,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 John Doe<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

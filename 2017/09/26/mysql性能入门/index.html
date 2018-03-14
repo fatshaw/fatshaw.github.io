@@ -53,9 +53,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -104,8 +104,8 @@
 <ol>
 <li>Shared and Exclusive Locks：读写锁</li>
 <li>Intention Locks：意向锁：表或者行级别锁<ol>
-<li><a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="external">SELECT … LOCK IN SHARE MODE</a> IS锁。读锁</li>
-<li><a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="external">SELECT … FOR UPDATE</a> IX锁。写锁</li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener">SELECT … LOCK IN SHARE MODE</a> IS锁。读锁</li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener">SELECT … FOR UPDATE</a> IX锁。写锁</li>
 </ol>
 </li>
 <li>行级锁：用于锁定某一行数据，粒度</li>
@@ -117,10 +117,10 @@
 <li><p>事务</p>
 <ul>
 <li>隔离级别<ul>
-<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_read-uncommitted" target="_blank" rel="external">READ UNCOMMITTED</a></li>
-<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_read-committed" target="_blank" rel="external">READ COMMITTED</a> 阿里云默认，性能好些。不适用gap锁。在扫描数据的时候，会自动释放不符合条件的行锁</li>
-<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_repeatable-read" target="_blank" rel="external">REPEATABLE READ</a> innodb默认级别，mvcc，使用next-key lock</li>
-<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_serializable" target="_blank" rel="external">SERIALIZABLE</a> 串行化</li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_read-uncommitted" target="_blank" rel="noopener">READ UNCOMMITTED</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_read-committed" target="_blank" rel="noopener">READ COMMITTED</a> 阿里云默认，性能好些。不适用gap锁。在扫描数据的时候，会自动释放不符合条件的行锁</li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_repeatable-read" target="_blank" rel="noopener">REPEATABLE READ</a> innodb默认级别，mvcc，使用next-key lock</li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html#isolevel_serializable" target="_blank" rel="noopener">SERIALIZABLE</a> 串行化</li>
 </ul>
 </li>
 <li>Locking Reads<ul>
@@ -142,7 +142,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/mysql性能入门/" data-id="cjequn9bl0006y8bm9wqgkytg" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/09/26/mysql性能入门/" data-id="cjequx4rn00062vbmu2hjxzpw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
@@ -154,7 +154,7 @@
 <nav id="article-nav">
   
     <a href="/2017/09/26/前后端开发职责/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Récent</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           前后端开发职责
@@ -164,7 +164,7 @@
   
   
     <a href="/2017/09/11/algorithm-stock/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ancien</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">best time to buy and sell stock</div>
     </a>
   
@@ -179,7 +179,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Catégories</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li></ul>
     </div>
@@ -189,7 +189,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队管理/">团队管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发流程/">开发流程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
     </div>
@@ -199,7 +199,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/bash/" style="font-size: 10px;">bash</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/rpc/" style="font-size: 10px;">rpc</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/团队管理/" style="font-size: 10px;">团队管理</a> <a href="/tags/开发流程/" style="font-size: 10px;">开发流程</a> <a href="/tags/系统设计/" style="font-size: 10px;">系统设计</a>
     </div>
@@ -218,7 +218,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -255,7 +255,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 John Doe<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

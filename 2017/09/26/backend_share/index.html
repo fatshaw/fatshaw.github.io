@@ -67,9 +67,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -125,7 +125,7 @@
 <p><img src="http://ovqe8818i.bkt.clouddn.com/WX20170901-145050@2x.png" alt="动态刷新"></p>
 </li>
 <li><p>配置获取</p>
-<p>通过域名conf.jinyi999.cn/{项目名称}/{环境} 获取应用相应环境的配置，比如<a href="http://conf.jinyi999.cn/ytx-sso/k8s或者sso项目k8s环境的配置" target="_blank" rel="external">http://conf.jinyi999.cn/ytx-sso/k8s或者sso项目k8s环境的配置</a></p>
+<p>通过域名conf.jinyi999.cn/{项目名称}/{环境} 获取应用相应环境的配置，比如<a href="http://conf.jinyi999.cn/ytx-sso/k8s或者sso项目k8s环境的配置" target="_blank" rel="noopener">http://conf.jinyi999.cn/ytx-sso/k8s或者sso项目k8s环境的配置</a></p>
 <p><img src="http://ovqe8818i.bkt.clouddn.com/WX20170901-150127@2x.png" alt="配置"></p>
 <p>​</p>
 </li>
@@ -156,7 +156,7 @@
 <ul>
 <li><p>重试机制</p>
 <p>远程调用需要考虑重试，比如由于网络超时、服务不稳定等原因造成访问失败。ribbon提供的重试机制为：对于所有GET幂等请求进行重试，重试方式是本机重试或者重新选取一个节点重试。相关配置为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">ribbon:</div><div class="line">  MaxAutoRetries: 1  			#本机重试一次</div><div class="line">  MaxAutoRetriesNextServer: 1	#重新选举一台重试</div><div class="line">  okhttp:</div><div class="line">    enabled: true				#使用okhttp</div><div class="line">    </div><div class="line">eureka:</div><div class="line">  registry-fetch-interval-seconds: 5	#5s从注册中心获取一次服务信息</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ribbon:</span><br><span class="line">  MaxAutoRetries: 1  			#本机重试一次</span><br><span class="line">  MaxAutoRetriesNextServer: 1	#重新选举一台重试</span><br><span class="line">  okhttp:</span><br><span class="line">    enabled: true				#使用okhttp</span><br><span class="line">    </span><br><span class="line">eureka:</span><br><span class="line">  registry-fetch-interval-seconds: 5	#5s从注册中心获取一次服务信息</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h4 id="4-网关"><a href="#4-网关" class="headerlink" title="4.网关"></a>4.网关</h4><p> 在微服务时间，服务数量相对传统单体应用会增加许多。我们通过统一的网关服务zuul代理访问所有的服务。</p>
@@ -171,7 +171,7 @@
 </li>
 </ul>
 <h4 id="5-日志追踪"><a href="#5-日志追踪" class="headerlink" title="5.日志追踪"></a>5.日志追踪</h4><p>在单体应用时代，所有服务日志在一个应用中，而在微服务时代，一次请求涉及多个服务，日志追踪就变的十分重要。我们使用springcloud-sleuth组件进行日志追踪管理，所有日志都会有一个traceid，当进行远程调用时，该traceid会被传递到下游服务。我们的日志样例如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">2017-09-01 16:09:56.828  INFO [zuul-server,e3459faf4e4115d8,e3459faf4e4115d8,false] 9 </div><div class="line">--- [nio-8041-exec-1] c.y.f.base.filter.RequestLoggingFilter   : </div><div class="line">After request [method=POST,After request [uri=/api/user-center/device/save;payload=&#123;&quot;deviceToken&quot;:&quot;dd6f96fb3a9c10e6f9087d5ab5291e37&quot;,</div><div class="line">&quot;deviceId&quot;:&quot;CC2165D8-BADC-476F-8ED8-B71A04CC2E41&quot;,&quot;userId&quot;:9,&quot;os&quot;:&quot;IOS&quot;,&quot;appVersion&quot;:&quot;1.5.0&quot;&#125;],</div><div class="line">time=12(ms),code=200]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2017-09-01 16:09:56.828  INFO [zuul-server,e3459faf4e4115d8,e3459faf4e4115d8,false] 9 </span><br><span class="line">--- [nio-8041-exec-1] c.y.f.base.filter.RequestLoggingFilter   : </span><br><span class="line">After request [method=POST,After request [uri=/api/user-center/device/save;payload=&#123;&quot;deviceToken&quot;:&quot;dd6f96fb3a9c10e6f9087d5ab5291e37&quot;,</span><br><span class="line">&quot;deviceId&quot;:&quot;CC2165D8-BADC-476F-8ED8-B71A04CC2E41&quot;,&quot;userId&quot;:9,&quot;os&quot;:&quot;IOS&quot;,&quot;appVersion&quot;:&quot;1.5.0&quot;&#125;],</span><br><span class="line">time=12(ms),code=200]</span><br></pre></td></tr></table></figure>
 <p>traceid=e3459faf4e4115d8，同时我们记录了每次请求的耗时和httpcode，方便排查问题</p>
 <ul>
 <li><p>zipkins</p>
@@ -206,7 +206,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/backend_share/" data-id="cjequn9bn000ay8bm3p1g2x9d" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/09/26/backend_share/" data-id="cjequx4rq000a2vbmtt5o5548" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
@@ -218,7 +218,7 @@
 <nav id="article-nav">
   
     <a href="/2017/11/07/Mysql 索引入门/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Récent</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           mysql索引入门
@@ -228,7 +228,7 @@
   
   
     <a href="/2017/09/26/系统调用思考/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ancien</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">系统调用思考</div>
     </a>
   
@@ -243,7 +243,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Catégories</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li></ul>
     </div>
@@ -253,7 +253,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队管理/">团队管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发流程/">开发流程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
     </div>
@@ -263,7 +263,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/bash/" style="font-size: 10px;">bash</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/rpc/" style="font-size: 10px;">rpc</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/团队管理/" style="font-size: 10px;">团队管理</a> <a href="/tags/开发流程/" style="font-size: 10px;">开发流程</a> <a href="/tags/系统设计/" style="font-size: 10px;">系统设计</a>
     </div>
@@ -282,7 +282,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -319,7 +319,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 John Doe<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
