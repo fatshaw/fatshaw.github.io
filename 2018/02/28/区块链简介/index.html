@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="区块链简介 区块链是什么？一句话，它是一种特殊的分布式数据库  区块链特点：去中心化，解决相互信任问题  区块：区块链由一个个区块（block）组成。区块很像数据库的记录，每次写入数据，就是创建一个区块   区块内容包括： 版本号：4 字节；上一个区块头的 SHA256 hash 值：链接到一个合法的块上，32 字节；包含的所有验证过的交易的 Merkle 树根的哈希值，32 字节；时间戳time">
 <meta property="og:image" content="https://cdn-images-1.medium.com/max/1600/1*pbyFH4U5sO27UE1EjnImoA.png">
-<meta property="og:updated_time" content="2018-03-14T09:03:46.875Z">
+<meta property="og:updated_time" content="2018-03-14T09:10:19.540Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="区块链简介">
 <meta name="twitter:description" content="区块链简介 区块链是什么？一句话，它是一种特殊的分布式数据库  区块链特点：去中心化，解决相互信任问题  区块：区块链由一个个区块（block）组成。区块很像数据库的记录，每次写入数据，就是创建一个区块   区块内容包括： 版本号：4 字节；上一个区块头的 SHA256 hash 值：链接到一个合法的块上，32 字节；包含的所有验证过的交易的 Merkle 树根的哈希值，32 字节；时间戳time">
@@ -88,7 +88,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="区块链简介"><a href="#区块链简介" class="headerlink" title="区块链简介"></a>区块链简介</h3><ol>
+        <h2 id="区块链简介"><a href="#区块链简介" class="headerlink" title="区块链简介"></a>区块链简介</h2><ol>
 <li><p>区块链是什么？一句话，它是一种特殊的分布式数据库</p>
 </li>
 <li><p>区块链特点：去中心化，解决相互信任问题</p>
@@ -118,7 +118,8 @@
 <li><p>智能合约：区块链触发器，一堆代码实现的业务逻辑</p>
 </li>
 </ol>
-<h3 id="比特币："><a href="#比特币：" class="headerlink" title="比特币："></a>比特币：</h3><ol>
+<p><br></p>
+<h2 id="比特币："><a href="#比特币：" class="headerlink" title="比特币："></a>比特币：</h2><ol>
 <li><p>基于区块链的技术，通过PoW算法达成分布式一致性。通过挖矿产生新的区块记录交易信息</p>
 </li>
 <li><p>挖矿</p>
@@ -126,13 +127,15 @@
 <p>方法：每个计算节点计算hash值，当hash值小于某个难度系数才有效。区块链保证平均每10分钟能够产生一个有效hash值。难度系数每两周（2016个区块）调整一次，使得能够保持平均每10分钟能够产生一个有效区块</p>
 </li>
 </ol>
-<h3 id="区块链、以太坊"><a href="#区块链、以太坊" class="headerlink" title="区块链、以太坊"></a>区块链、以太坊</h3><p>比特币使用了区块链技术，而以太坊是区块链技术的一个实现平台</p>
+<p><br></p>
+<h2 id="区块链、以太坊"><a href="#区块链、以太坊" class="headerlink" title="区块链、以太坊"></a>区块链、以太坊</h2><p>比特币使用了区块链技术，而以太坊是区块链技术的一个实现平台</p>
 <p>从交易延伸到了智能合约</p>
-<h3 id="开放问题"><a href="#开放问题" class="headerlink" title="开放问题"></a>开放问题</h3><p><strong><em>为什么比特币要挖矿</em></strong></p>
+<p><br></p>
+<h2 id="开放问题"><a href="#开放问题" class="headerlink" title="开放问题"></a>开放问题</h2><p><strong><em>为什么比特币要挖矿</em></strong></p>
 <p><strong><em>比特币为什么使用PoW共识算法</em></strong></p>
-<h3 id="简易版区块链"><a href="#简易版区块链" class="headerlink" title="简易版区块链"></a>简易版区块链</h3><ul>
-<li>需求1：简单区块链</li>
-</ul>
+<p><br></p>
+<h2 id="简易版区块链"><a href="#简易版区块链" class="headerlink" title="简易版区块链"></a>简易版区块链</h2><ul>
+<li><p>需求1：简单区块链</p>
 <ol>
 <li><p>设计实现api增加区块（代替挖矿），查看区块链</p>
 </li>
@@ -151,12 +154,12 @@
 <p>data=0</p>
 <p>hash=”f78b037f6d1ecfc5a00bc7d96858bdc7af9ac8dbf95fdd5736d0f950ab279b9e”</p>
 <p>previoushash=””</p>
-<p>​</p>
 </li>
 </ol>
-<ul>
-<li>需求2：设计P2P区块链</li>
+</li>
 </ul>
+<ul>
+<li><p>需求2：设计P2P区块链</p>
 <ol>
 <li>在第一个需求基础上，增加P2P通讯接口（增加node，查看nodes）。</li>
 <li>可以通过websocket远程通信多个节点，并同步区块链信息。同步规则为：<ul>
@@ -165,28 +168,30 @@
 </li>
 <li>其他同上</li>
 </ol>
-<ul>
-<li>需求3：Pow</li>
-</ul>
+</li>
+<li><p>需求3：Pow</p>
 <ol>
 <li>在前两个基础上，增加Pow</li>
 </ol>
-<p>参考资料：</p>
-<p><a href="http://www.ruanyifeng.com/blog/2017/12/blockchain-tutorial.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2017/12/blockchain-tutorial.html</a></p>
+</li>
+</ul>
+<p><br></p>
+<h2 id="开放问题答案"><a href="#开放问题答案" class="headerlink" title="开放问题答案"></a>开放问题答案</h2><p><strong><em>为什么比特币要挖矿</em></strong></p>
+<p>货币的本质是购买力，如果货币被不断增发，其所代表的购买力将不断下降，就会出现通货。比特币原本的目的是为了解决通货的问题。为了保证比特币的稀缺性，比特币作者使用算力来体现稀缺性，所以需要挖矿才能产生比特币</p>
+<p><strong><em>比特币为什么使用PoW共识算法</em></strong></p>
+<p>因为是公网环境，网络情况不稳定，安全性较差，所以PoW是一种相对公平可以达到一致性的算法，虽然效率较低。相比PoS，PBFT，Raft等算法性能会高很多。</p>
+<p><br></p>
+<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><p><a href="http://www.ruanyifeng.com/blog/2017/12/blockchain-tutorial.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2017/12/blockchain-tutorial.html</a></p>
 <p><a href="https://medium.com/@lhartikk/a-blockchain-in-200-lines-of-code-963cc1cc0e54" target="_blank" rel="noopener">https://medium.com/@lhartikk/a-blockchain-in-200-lines-of-code-963cc1cc0e54</a></p>
 <p><a href="https://medium.com/@mycoralhealth/code-your-own-blockchain-in-less-than-200-lines-of-go-e296282bcffc" target="_blank" rel="noopener">https://medium.com/@mycoralhealth/code-your-own-blockchain-in-less-than-200-lines-of-go-e296282bcffc</a></p>
 <p><a href="http://www.infoq.com/cn/articles/bitcoin-and-block-chain-part02" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/bitcoin-and-block-chain-part02</a>  Pow</p>
 <p><a href="https://blockchain.info/" target="_blank" rel="noopener">https://blockchain.info/</a></p>
 <p><a href="http://www.ey.com/Publication/vwLUAssets/ey-blockchain-platform-research-and-analysis-cn/$FILE/ey-blockchain-platform-research-and-analysis-cn.pdf" target="_blank" rel="noopener">http://www.ey.com/Publication/vwLUAssets/ey-blockchain-platform-research-and-analysis-cn/$FILE/ey-blockchain-platform-research-and-analysis-cn.pdf</a></p>
-<h3 id="开放问题答案"><a href="#开放问题答案" class="headerlink" title="开放问题答案"></a>开放问题答案</h3><p><strong><em>为什么比特币要挖矿</em></strong></p>
-<p>货币的本质是购买力，如果货币被不断增发，其所代表的购买力将不断下降，就会出现通货。比特币原本的目的是为了解决通货的问题。为了保证比特币的稀缺性，比特币作者使用算力来体现稀缺性，所以需要挖矿才能产生比特币</p>
-<p><strong><em>比特币为什么使用PoW共识算法</em></strong></p>
-<p>因为是公网环境，网络情况不稳定，安全性较差，所以PoW是一种相对公平可以达到一致性的算法，虽然效率较低。相比PoS，PBFT，Raft等算法性能会高很多。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/区块链简介/" data-id="cjequzf2i000g1jbmiwzvc281" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/28/区块链简介/" data-id="cjeqv7vfl000fj7bm0zoc8b5r" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
