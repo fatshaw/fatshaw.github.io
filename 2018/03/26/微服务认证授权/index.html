@@ -3,19 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>前后端开发职责 | Hexo</title>
+  <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="问题前端同学和我在讨论什么功能应该放在后端完成，什么工作应该放在前端完成。 想法 传统的开发模式是后端负责业务逻辑，然后通过模板填充数据的方式返回html给前端显示，前端就只要负责样式设计即可。这种模式的缺点是后端太重，既要负责业务，又要负责显示，前端样式改了，后端也要跟着改，整体效率低下。 随之产生的是前后端分离开发模式，即MVC，目的是解决后端负责数据和业务，前端负责显示，通过Controll">
-<meta name="keywords" content="开发流程">
+  <meta name="description" content="微服务体系中的认证和授权 认证（authorization）和授权(authentication)的区别  认证（authorization）：验证A是A，即A用户输入用户名密码，验证是不是正确 授权（authentication）：认证A是A后，判断A是不是有访问某个url或者某个数据的权限   认证有几种方式  微信认证 用户名密码 手机号+密码 手机号+验证码   认证流程  微信认证登录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="前后端开发职责">
-<meta property="og:url" content="http://yoursite.com/2017/09/26/前后端开发职责/index.html">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2018/03/26/微服务认证授权/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="问题前端同学和我在讨论什么功能应该放在后端完成，什么工作应该放在前端完成。 想法 传统的开发模式是后端负责业务逻辑，然后通过模板填充数据的方式返回html给前端显示，前端就只要负责样式设计即可。这种模式的缺点是后端太重，既要负责业务，又要负责显示，前端样式改了，后端也要跟着改，整体效率低下。 随之产生的是前后端分离开发模式，即MVC，目的是解决后端负责数据和业务，前端负责显示，通过Controll">
-<meta property="og:updated_time" content="2017-09-26T05:58:08.000Z">
+<meta property="og:description" content="微服务体系中的认证和授权 认证（authorization）和授权(authentication)的区别  认证（authorization）：验证A是A，即A用户输入用户名密码，验证是不是正确 授权（authentication）：认证A是A后，判断A是不是有访问某个url或者某个数据的权限   认证有几种方式  微信认证 用户名密码 手机号+密码 手机号+验证码   认证流程  微信认证登录">
+<meta property="og:image" content="http://ovqe8818i.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95.jpg">
+<meta property="og:image" content="http://ovqe8818i.bkt.clouddn.com/%E6%89%8B%E6%9C%BA%E5%8F%B7%E7%99%BB%E5%BD%95.jpg">
+<meta property="og:image" content="http://ovqe8818i.bkt.clouddn.com/resource-service.jpg">
+<meta property="og:image" content="http://ovqe8818i.bkt.clouddn.com/%E6%8E%88%E6%9D%83%E7%AE%A1%E7%90%86.jpg">
+<meta property="og:updated_time" content="2018-03-26T06:54:01.925Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="前后端开发职责">
-<meta name="twitter:description" content="问题前端同学和我在讨论什么功能应该放在后端完成，什么工作应该放在前端完成。 想法 传统的开发模式是后端负责业务逻辑，然后通过模板填充数据的方式返回html给前端显示，前端就只要负责样式设计即可。这种模式的缺点是后端太重，既要负责业务，又要负责显示，前端样式改了，后端也要跟着改，整体效率低下。 随之产生的是前后端分离开发模式，即MVC，目的是解决后端负责数据和业务，前端负责显示，通过Controll">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="微服务体系中的认证和授权 认证（authorization）和授权(authentication)的区别  认证（authorization）：验证A是A，即A用户输入用户名密码，验证是不是正确 授权（authentication）：认证A是A后，判断A是不是有访问某个url或者某个数据的权限   认证有几种方式  微信认证 用户名密码 手机号+密码 手机号+验证码   认证流程  微信认证登录">
+<meta name="twitter:image" content="http://ovqe8818i.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -64,69 +68,92 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-前后端开发职责" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-微服务认证授权" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/09/26/前后端开发职责/" class="article-date">
-  <time datetime="2017-09-26T05:58:08.000Z" itemprop="datePublished">2017-09-26</time>
+    <a href="/2018/03/26/微服务认证授权/" class="article-date">
+  <time datetime="2018-03-26T06:54:01.924Z" itemprop="datePublished">2018-03-26</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      前后端开发职责
-    </h1>
-  
-
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>前端同学和我在讨论什么功能应该放在后端完成，什么工作应该放在前端完成。</p>
-<h1 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h1><ul>
-<li>传统的开发模式是后端负责业务逻辑，然后通过模板填充数据的方式返回html给前端显示，前端就只要负责样式设计即可。这种模式的缺点是后端太重，既要负责业务，又要负责显示，前端样式改了，后端也要跟着改，整体效率低下。</li>
-<li>随之产生的是前后端分离开发模式，即MVC，目的是解决后端负责数据和业务，前端负责显示，通过Controller进行衔接。但是同样有个问题，即Controller的工作范围，如果和以往一样，controller负责将所有业务数据封装完成，View就是简单的显示数据，这样的好处相比原有的模式只是在于后端不用知道前端样式，只负责返回数据，而模板渲染的工作放到了前端。</li>
-<li>那是不是前端就只是负责显示数据？我觉得不应该这样的，前端也是应该有相应的业务逻辑存在的。那哪些业务逻辑应该放在前端，哪些必须放在后端，其实很难定义。有些业务必须放在后端，比如数据校验，安全分析，权限控制这些是要放在后端。但是有些业务是两边都可以做的，比如菜单栏显示，菜单栏里面的数据如果是固定的，那这个数据应该维护在前端还是后端，其实前后端都可以。</li>
+        <h3 id="微服务体系中的认证和授权"><a href="#微服务体系中的认证和授权" class="headerlink" title="微服务体系中的认证和授权"></a>微服务体系中的认证和授权</h3><ol>
+<li><p>认证（authorization）和授权(authentication)的区别</p>
+<ul>
+<li>认证（authorization）：验证A是A，即A用户输入用户名密码，验证是不是正确</li>
+<li>授权（authentication）：认证A是A后，判断A是不是有访问某个url或者某个数据的权限</li>
 </ul>
-<h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><h3 id="我觉得针对这个问题我的思路是两点"><a href="#我觉得针对这个问题我的思路是两点" class="headerlink" title="我觉得针对这个问题我的思路是两点"></a>我觉得针对这个问题我的思路是两点</h3><ul>
-<li>从整体最优的角度去思考问题，从开发成本，维护成本角度看，放在哪里是最优的。</li>
-<li>前后端开发语言的特点考虑，前端出现的优势就是快速开发，相比后端java，js更加轻，开发效率更高，所以我个人建议是将一些独立的业务逻辑移到前端，而不是放在后端。而后端java的优势在于性能，安全，强大的框架以及各种成熟的中间件，所以相对复杂的业务流程需要放到后端。</li>
+</li>
+<li><p>认证有几种方式</p>
+<ul>
+<li>微信认证</li>
+<li>用户名密码</li>
+<li>手机号+密码</li>
+<li>手机号+验证码</li>
 </ul>
-<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><ul>
-<li>后端注重数据，前端注重展示，有时候边界不是特别清晰，需要从整体考虑收益，而不是单从前端或者后端角度考虑问题。</li>
+</li>
+<li><p>认证流程</p>
+<ul>
+<li><p>微信认证登录</p>
+<p>微信登录的方式通过微信认证用户，本地不进行认证。微信认证完成后获取微信用户信息并保存到用户信息模块，信息包括union_id,open_id,昵称等。随后生成jwt token返回给客户端</p>
+<p><img src="http://ovqe8818i.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95.jpg" alt="微信登录"></p>
+<p>SSO和用户存储管理系统分开两个模块，目的是保证SSO相对稳定独立，不和用户管理业务逻辑耦合。用户管理逻辑可能包括：用户查询，用户信息更新等</p>
+</li>
+<li><p>手机号登录</p>
+<p>手机号+密码登录的方式认证用户合法性</p>
+<p><img src="http://ovqe8818i.bkt.clouddn.com/%E6%89%8B%E6%9C%BA%E5%8F%B7%E7%99%BB%E5%BD%95.jpg" alt="手机号+密码登录"></p>
+</li>
 </ul>
+</li>
+<li><p>SSO认证</p>
+<p>SSO是个登录门户，他通过调用微信服务或者用户系统认证用户信息合法性。如果合法，生成jwt token保存userid，有效期时间等信息给前端</p>
+</li>
+<li><p>网关统一认证</p>
+<p>微服务体系下，对外接口有个约定：</p>
+<ul>
+<li>对外暴露服务不能以user_id作为接口参数，必须以token进行传输。</li>
+</ul>
+<p>如果微服务众多，每个服务都去验证token合法性会过于冗余。所以统一在网关层进行验证，流程如下：</p>
+<ul>
+<li>对于每一个接口请求，网关会从http_header中获取token，并去sso验证token合法性。如果合法返回token对应的user_id。</li>
+<li>网关将user_id放入http_header中传递到resource-service服务。</li>
+<li>resource-service通过http_header获取user_id并调用授权服务验证用户是否有权限访问该接口</li>
+</ul>
+<p><img src="http://ovqe8818i.bkt.clouddn.com/resource-service.jpg" alt="网关认证"></p>
+</li>
+<li><p>授权管理</p>
+<p>授权是认证后需要做的事情。一般授权管理的模型是基于role的模型，一般是用户属于某个role，role和权限关联。我们在这个基础上面做了扩充。</p>
+<ul>
+<li>引入了组unit，部门deparment，用户可以属于某个unit，department，role，这些对象和权限permission关联。</li>
+<li>权限permission关联一个或者多个资源，资源包括菜单，操作，视图等</li>
+<li>权限permission关联一个或者多个动态管理函数funtion（使用js或者groovy写）</li>
+<li>权限permission关联模块分类，分类关联平台</li>
+</ul>
+<p><img src="http://ovqe8818i.bkt.clouddn.com/%E6%8E%88%E6%9D%83%E7%AE%A1%E7%90%86.jpg" alt="授权管理"></p>
+<p>​</p>
+<p>​</p>
+</li>
+</ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/前后端开发职责/" data-id="cjf7vmy5q0003brbme6tblsj2" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/26/微服务认证授权/" data-id="cjf7vmy5w0009brbmozoqg25i" class="article-share-link">Partager</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/开发流程/">开发流程</a></li></ul>
-
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2017/09/26/我脑海中的优秀技术团队/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Récent</strong>
-      <div class="article-nav-title">
-        
-          我脑海中的优秀技术团队
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/09/26/mysql性能入门/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/02/28/区块链简介/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Ancien</strong>
-      <div class="article-nav-title">mysql性能入门</div>
+      <div class="article-nav-title">区块链简介</div>
     </a>
   
 </nav>
