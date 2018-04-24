@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="整数处理往往涉及溢出，一般的处理方案就是将整数转为long以后进行处理。 判断整数溢出的方式为，如果两个正数相加返回负数，则溢出。如果两个负数相加返回正数则溢出 题目描述：https://leetcode.com/problems/divide-two-integers/description/ 解题思路：除法无法使用，可以通过加法来模拟，题目中注意的问题是如果每次只是增加divisor，速度过慢">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2018/04/24/Divide Two Integers/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="整数处理往往涉及溢出，一般的处理方案就是将整数转为long以后进行处理。 判断整数溢出的方式为，如果两个正数相加返回负数，则溢出。如果两个负数相加返回正数则溢出 题目描述：https://leetcode.com/problems/divide-two-integers/description/ 解题思路：除法无法使用，可以通过加法来模拟，题目中注意的问题是如果每次只是增加divisor，速度过慢">
+<meta property="og:updated_time" content="2018-04-24T06:52:18.567Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="整数处理往往涉及溢出，一般的处理方案就是将整数转为long以后进行处理。 判断整数溢出的方式为，如果两个正数相加返回负数，则溢出。如果两个负数相加返回正数则溢出 题目描述：https://leetcode.com/problems/divide-two-integers/description/ 解题思路：除法无法使用，可以通过加法来模拟，题目中注意的问题是如果每次只是增加divisor，速度过慢">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Divide Two Integers" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/24/Divide Two Integers/" class="article-date">
+  <time datetime="2018-04-24T06:51:53.277Z" itemprop="datePublished">2018-04-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>整数处理往往涉及溢出，一般的处理方案就是将整数转为long以后进行处理。</p>
+<p>判断整数溢出的方式为，如果两个正数相加返回负数，则溢出。如果两个负数相加返回正数则溢出</p>
+<h4 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h4><p><a href="https://leetcode.com/problems/divide-two-integers/description/" target="_blank" rel="noopener">https://leetcode.com/problems/divide-two-integers/description/</a></p>
+<h4 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h4><p>除法无法使用，可以通过加法来模拟，题目中注意的问题是如果每次只是增加divisor，速度过慢，会超时，所以通过加分模拟乘法的方式来加快速度。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">findMultiply</span><span class="params">(<span class="keyword">long</span> dividend, <span class="keyword">long</span> divisor, <span class="keyword">boolean</span> isNegative)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (dividend &lt; divisor) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">long</span> sum = divisor;</span><br><span class="line">    <span class="keyword">long</span> result = isNegative ? -<span class="number">1</span> : <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> ((sum + sum) &lt;= dividend) &#123;</span><br><span class="line">        result += result;</span><br><span class="line">        sum += sum;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result + findMultiply(dividend - sum, divisor, isNegative);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">divide</span><span class="params">(<span class="keyword">int</span> dividend, <span class="keyword">int</span> divisor)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">long</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">long</span> ldividend = dividend;</span><br><span class="line">    <span class="keyword">long</span> ldivisor = divisor;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ldividend &gt; <span class="number">0</span> &amp;&amp; ldivisor &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        result = findMultiply(ldividend, ldivisor, <span class="keyword">false</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ldividend &lt; <span class="number">0</span> &amp;&amp; ldivisor &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        result = findMultiply(Math.abs(ldividend), Math.abs(ldivisor), <span class="keyword">false</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ldividend &gt; <span class="number">0</span> &amp;&amp; ldivisor &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        result = findMultiply(Math.abs(ldividend), Math.abs(ldivisor), <span class="keyword">true</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ldividend &lt; <span class="number">0</span> &amp;&amp; ldivisor &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        result = findMultiply(Math.abs(ldividend), Math.abs(ldivisor), <span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (result &gt; Integer.MAX_VALUE) &#123;</span><br><span class="line">        result = Integer.MAX_VALUE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">int</span>) result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public void stringtoint() &#123;</span><br><span class="line"></span><br><span class="line">        assert divide(10, 5) == 2;</span><br><span class="line">        assert divide(42, 5) == 8;</span><br><span class="line">        assert divide(11, 5) == 2;</span><br><span class="line"></span><br><span class="line">        assert divide(-10, -5) == 2;</span><br><span class="line">        assert divide(-11, -5) == 2;</span><br><span class="line">        assert divide(-9, -5) == 1;</span><br><span class="line"></span><br><span class="line">        assert divide(9, -5) == -1;</span><br><span class="line">        assert divide(10, -5) == -2;</span><br><span class="line"></span><br><span class="line">        assert divide(10, -5) == -2;</span><br><span class="line">        assert divide(1000000000, -5) == 1000000000 / -5;</span><br><span class="line"></span><br><span class="line">        assert divide(Integer.MAX_VALUE, 1) == Integer.MAX_VALUE;</span><br><span class="line">        assert divide(Integer.MIN_VALUE, 1) == Integer.MIN_VALUE;</span><br><span class="line">        assert divide(Integer.MAX_VALUE, -1) == Integer.MIN_VALUE + 1;</span><br><span class="line">        assert divide(Integer.MIN_VALUE, -1) == Integer.MAX_VALUE;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/24/Divide Two Integers/" data-id="cjgdbcqdh0000lubmoyr713o9" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/27/kata - bulls and cows/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">TDD coding kata - bulls and cows</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队管理/">团队管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发流程/">开发流程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bash/" style="font-size: 10px;">bash</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/rpc/" style="font-size: 10px;">rpc</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/团队管理/" style="font-size: 10px;">团队管理</a> <a href="/tags/开发流程/" style="font-size: 10px;">开发流程</a> <a href="/tags/微服务/" style="font-size: 10px;">微服务</a> <a href="/tags/系统设计/" style="font-size: 20px;">系统设计</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/04/24/Divide Two Integers/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/27/kata - bulls and cows/">TDD coding kata - bulls and cows</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/26/微服务认证授权/">微服务体系中的认证和授权</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/28/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/02/bash多行注释/">Bash 多行注释</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
