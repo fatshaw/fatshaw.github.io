@@ -3,14 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2018/2 | Hexo</title>
+  <title>算法导论 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2018/02/index.html">
+  <meta name="description" content="字符串处理  原地reverse字符串单测   树遍历  树对称   链表  图论  邻接矩阵edge方法存储 搜索算法：Dfs,bfs,Dijkstra算法   数组动态规划  Climbing Stairs fibonacci数列 f(n) =f(n-1)+f(n-2)  Min Cost Climbing Stairs 在Climbing Stairs基础上增加了cost，问题分解为 su">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法导论">
+<meta property="og:url" content="http://yoursite.com/2018/04/25/算法导论/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="字符串处理  原地reverse字符串单测   树遍历  树对称   链表  图论  邻接矩阵edge方法存储 搜索算法：Dfs,bfs,Dijkstra算法   数组动态规划  Climbing Stairs fibonacci数列 f(n) =f(n-1)+f(n-2)  Min Cost Climbing Stairs 在Climbing Stairs基础上增加了cost，问题分解为 su">
+<meta property="og:updated_time" content="2018-05-07T09:07:02.444Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="算法导论">
+<meta name="twitter:description" content="字符串处理  原地reverse字符串单测   树遍历  树对称   链表  图论  邻接矩阵edge方法存储 搜索算法：Dfs,bfs,Dijkstra算法   数组动态规划  Climbing Stairs fibonacci数列 f(n) =f(n-1)+f(n-2)  Min Cost Climbing Stairs 在Climbing Stairs基础上增加了cost，问题分解为 su">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -59,39 +64,116 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/02/28/区块链简介/" class="archive-article-date">
-  <time datetime="2018-02-28T09:35:54.046Z" itemprop="datePublished">Feb 28</time>
+        <section id="main"><article id="post-算法导论" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/25/算法导论/" class="article-date">
+  <time datetime="2018-04-25T07:21:27.580Z" itemprop="datePublished">2018-04-25</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/28/区块链简介/">区块链简介</a>
+    <h1 class="article-title" itemprop="name">
+      算法导论
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>字符串处理</p>
+<ol>
+<li>原地reverse字符串单测</li>
+</ol>
+</li>
+<li><p>树遍历</p>
+<ol>
+<li>树对称</li>
+</ol>
+</li>
+<li><p>链表</p>
+</li>
+<li><p>图论</p>
+<ul>
+<li>邻接矩阵edge方法存储</li>
+<li>搜索算法：Dfs,bfs,<strong>Dijkstra</strong>算法</li>
+</ul>
+</li>
+<li><p>数组动态规划</p>
+<ol>
+<li><p>Climbing Stairs</p>
+<p>fibonacci数列 f(n) =f(n-1)+f(n-2)</p>
+</li>
+<li><p>Min Cost Climbing Stairs</p>
+<p>在Climbing Stairs基础上增加了cost，问题分解为</p>
+<p>sum[i] 到达i节阶梯的花费，sum[i] = min(sum[i-1]+cost[i-1],sum[i-2]+cost[i-2])</p>
+</li>
+<li><p>Continuous Subarray Sum</p>
+<p>求任意子数组的和是不是等于k的倍数</p>
+<p>一个比较巧妙的思路是每个和模k，如果出现一个数之前出现过，即中间的数和为k的倍数</p>
+</li>
+<li><p>House Robber</p>
+<p>动态规划入门，sum[i]表示盗取i获得的最大钱数，sum[i] = max(sum[i-2]+c[i],sum[i-1])</p>
+</li>
+<li><p>Partition to K Equal Sum Subsets</p>
+<p>从数组中找到和为特定值的子数组，貌似没什么特别好的方法，暴力枚举</p>
+</li>
+<li><p>Counting Bits</p>
+<p>统计每个元素的二进制1个数，可以依赖之前的计算结果</p>
+<p>f(n) = k if n == 2^k</p>
+<p>f(n) = 1 + f(n-2^k)  if 2^k&lt;n&lt;2^k+1 </p>
+</li>
+<li><p>Split Array Largest Sum</p>
+<p>分解为两道题目：</p>
+<ul>
+<li>给定一个数组int[]nums，份数m，最大值max，需要将数组nums切分为连续的最多m份，每一份的和&lt;=max</li>
+<li>Given a lower bound (<em>left</em>), an upper bound (<em>right</em>), an unknown bool array (<em>B</em>), and an API uses <em>i</em> as input and tells you whether <em>B[i]</em> is true. If we know there exists an index <em>k</em>, <strong>that B[i] is false when i &lt; k, and B[i] is true when i &gt;= k</strong>. What is the fastest way to <strong>find this k (the lower bound)?</strong></li>
+</ul>
+<p>第一问通过贪心算法，不断累加数组，如果超过&gt;max，之前的数组作为一段，并重新开始累加，最多形成m份数组</p>
+<p>第二问可以用二分查找方法找到k。    </p>
+<p>组合这两个问题，原问题是找到一个数k，满足将原数组切分为m份，并且每一份的和&lt;=k,使得k最小。由于k&gt;=每一份数组的和，即max(nums)&lt;=k&lt;=sum(nums)。</p>
+</li>
+<li><p>最长有效子数组Longest Valid Parentheses</p>
+<p>动态规划：longest[i] 表示i为结尾的最长有效括号对</p>
+<p>如果s[i]==’(‘ 则忽略，如果s[i] == ‘)’ 并且s[i - longest[i-1] - 1] == ‘(‘ 则配对成功，长度加二，并且如果i - longest[i-1] - 2也是一个最长子串，则可以拼接成为新的最大子串</p>
+<p>if s[i] == ‘(‘ longest[i] = 0;</p>
+<p>if s[i] == ‘)’ &amp;&amp; s[i - longest[i-1] - 1] == ‘(‘ then: longest[i] = longest[i-1] + 2 + longest[i-longest[i-1]-2]</p>
+<p>​</p>
+</li>
+</ol>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/25/算法导论/" data-id="cjgw0z2dl000tjkbmwvtgxwej" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/04/24/Divide Two Integers/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Divide Two Integers</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 </section>
         

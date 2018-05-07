@@ -3,14 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2018/2 | Hexo</title>
+  <title>微服务技术选型 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2018/02/index.html">
+  <meta name="description" content="存储模型 关系数据库：mysql，postgresql。主从结构，以文件存储为主，索引使用b+树。适合结构化数据 文档数据库：mongodb 适合非结构化业务，非常灵活 不支持事务，4.0开始支持   内存数据库：redis（缓存，KV） hash：hset key f v zset：hashtable+skiplist   分布式一致性工具：etcd，zookeeper。KV存储，配置管理，服务">
+<meta name="keywords" content="microservices">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务技术选型">
+<meta property="og:url" content="http://yoursite.com/2018/03/19/微服务技术选型/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="存储模型 关系数据库：mysql，postgresql。主从结构，以文件存储为主，索引使用b+树。适合结构化数据 文档数据库：mongodb 适合非结构化业务，非常灵活 不支持事务，4.0开始支持   内存数据库：redis（缓存，KV） hash：hset key f v zset：hashtable+skiplist   分布式一致性工具：etcd，zookeeper。KV存储，配置管理，服务">
+<meta property="og:updated_time" content="2018-04-24T06:58:27.858Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="微服务技术选型">
+<meta name="twitter:description" content="存储模型 关系数据库：mysql，postgresql。主从结构，以文件存储为主，索引使用b+树。适合结构化数据 文档数据库：mongodb 适合非结构化业务，非常灵活 不支持事务，4.0开始支持   内存数据库：redis（缓存，KV） hash：hset key f v zset：hashtable+skiplist   分布式一致性工具：etcd，zookeeper。KV存储，配置管理，服务">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -59,39 +64,130 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/02/28/区块链简介/" class="archive-article-date">
-  <time datetime="2018-02-28T09:35:54.046Z" itemprop="datePublished">Feb 28</time>
+        <section id="main"><article id="post-微服务技术选型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/19/微服务技术选型/" class="article-date">
+  <time datetime="2018-03-19T02:51:27.438Z" itemprop="datePublished">2018-03-19</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/28/区块链简介/">区块链简介</a>
+    <h1 class="article-title" itemprop="name">
+      微服务技术选型
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="存储模型"><a href="#存储模型" class="headerlink" title="存储模型"></a>存储模型</h3><ol>
+<li>关系数据库：mysql，postgresql。主从结构，以文件存储为主，索引使用b+树。适合结构化数据</li>
+<li>文档数据库：mongodb<ul>
+<li>适合非结构化业务，非常灵活</li>
+<li>不支持事务，4.0开始支持</li>
+</ul>
+</li>
+<li>内存数据库：redis（缓存，KV）<ol>
+<li>hash：hset key f v</li>
+<li>zset：hashtable+skiplist</li>
+</ol>
+</li>
+<li>分布式一致性工具：etcd，zookeeper。KV存储，配置管理，服务发现，分布式锁，通知监听，分布式自增序列等功能<ol>
+<li>eted: 使用raft协议。底层KV存储使用bbolt。</li>
+<li>zookeeper：zab协议，类似paxos</li>
+</ol>
+</li>
+<li>本地KV：<ul>
+<li>LSM模型：leveldb，rocksdb</li>
+<li>B树：bolt，bbolt</li>
+</ul>
+</li>
+</ol>
+<h3 id="队列选型："><a href="#队列选型：" class="headerlink" title="队列选型："></a>队列选型：</h3><ol>
+<li>kafka<ul>
+<li>包含：broker，topic，partition，producer，consumer，consumer group</li>
+<li>性能较高，顺序读写日志。10万级别/s</li>
+<li>单播广播都支持，一个topic可以由一个或多个consumer group消费，每个consumer属于一个consumer group</li>
+<li>高可用：主从模式。通过zookeeper选举leader</li>
+</ul>
+</li>
+<li>rabbitmq<ul>
+<li>producer，exchanger（topic，direct，fanout），queue，consumer</li>
+<li>性能较高，内存+文件。万级别/s</li>
+<li>广播单播都支持</li>
+<li>高可用：镜像模式，外面加haproxy</li>
+</ul>
+</li>
+</ol>
+<h3 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h3><ul>
+<li>嵌入式</li>
+</ul>
+<ol>
+<li>eureka <ul>
+<li>服务端：java</li>
+<li>客户端：java，golang，nodejs</li>
+</ul>
+</li>
+<li>consul：<ul>
+<li>服务端：golang</li>
+<li>客户端：golang，java，nodejs，etc.</li>
+</ul>
+</li>
+<li>etcd，zookeeper:<ul>
+<li>分布式一致性工具，可以实现服务发现，需要做一定工作</li>
+<li>相比eureka，consul，这类工具比较强大，除了服务发现，还有locking，kv存储等</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>非入侵</p>
+<p>通过容器进行服务发现，一般都是通过Linux网络VIP+IPVS方式</p>
+</li>
+</ul>
+<ol>
+<li>docker-swarm</li>
+<li>k8s</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/19/微服务技术选型/" data-id="cjgw0z2df000ljkbmaus5yjxf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/microservices/">microservices</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/26/微服务认证授权/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          微服务体系中的认证和授权
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/28/区块链简介/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">区块链简介</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 </section>
         
