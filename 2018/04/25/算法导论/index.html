@@ -5,17 +5,17 @@
   
   <title>算法导论 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="字符串处理  原地reverse字符串单测   树遍历  树对称   链表  图论  邻接矩阵edge方法存储 搜索算法：Dfs,bfs,Dijkstra算法   数组动态规划  Climbing Stairs fibonacci数列 f(n) =f(n-1)+f(n-2)  Min Cost Climbing Stairs 在Climbing Stairs基础上增加了cost，问题分解为 su">
+  <meta name="description" content="字符串处理  原地reverse字符串单测   树遍历  树对称   链表  链表反转 遍历或者递归计算    图论  邻接矩阵edge方法存储 搜索算法：Dfs,bfs,Dijkstra算法   搜索  Divide Two Integers  不能用乘法、除法、取模操作进行除法操作。只能通过加分来操作。由于一个个加太慢，所以可以通过两倍两倍加来模拟乘法，类似二分  three sum问题 在">
 <meta name="keywords" content="algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="算法导论">
 <meta property="og:url" content="http://yoursite.com/2018/04/25/算法导论/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="字符串处理  原地reverse字符串单测   树遍历  树对称   链表  图论  邻接矩阵edge方法存储 搜索算法：Dfs,bfs,Dijkstra算法   数组动态规划  Climbing Stairs fibonacci数列 f(n) =f(n-1)+f(n-2)  Min Cost Climbing Stairs 在Climbing Stairs基础上增加了cost，问题分解为 su">
-<meta property="og:updated_time" content="2018-05-07T09:07:02.444Z">
+<meta property="og:description" content="字符串处理  原地reverse字符串单测   树遍历  树对称   链表  链表反转 遍历或者递归计算    图论  邻接矩阵edge方法存储 搜索算法：Dfs,bfs,Dijkstra算法   搜索  Divide Two Integers  不能用乘法、除法、取模操作进行除法操作。只能通过加分来操作。由于一个个加太慢，所以可以通过两倍两倍加来模拟乘法，类似二分  three sum问题 在">
+<meta property="og:updated_time" content="2018-05-09T10:32:39.961Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法导论">
-<meta name="twitter:description" content="字符串处理  原地reverse字符串单测   树遍历  树对称   链表  图论  邻接矩阵edge方法存储 搜索算法：Dfs,bfs,Dijkstra算法   数组动态规划  Climbing Stairs fibonacci数列 f(n) =f(n-1)+f(n-2)  Min Cost Climbing Stairs 在Climbing Stairs基础上增加了cost，问题分解为 su">
+<meta name="twitter:description" content="字符串处理  原地reverse字符串单测   树遍历  树对称   链表  链表反转 遍历或者递归计算    图论  邻接矩阵edge方法存储 搜索算法：Dfs,bfs,Dijkstra算法   搜索  Divide Two Integers  不能用乘法、除法、取模操作进行除法操作。只能通过加分来操作。由于一个个加太慢，所以可以通过两倍两倍加来模拟乘法，类似二分  three sum问题 在">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -53,9 +53,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -98,11 +98,36 @@
 </ol>
 </li>
 <li><p>链表</p>
+<ol>
+<li><p>链表反转</p>
+<p>遍历或者递归计算</p>
+</li>
+</ol>
 </li>
 <li><p>图论</p>
 <ul>
 <li>邻接矩阵edge方法存储</li>
 <li>搜索算法：Dfs,bfs,<strong>Dijkstra</strong>算法</li>
+</ul>
+</li>
+<li><p>搜索</p>
+<ul>
+<li><p><a href="https://leetcode.com/problems/divide-two-integers" target="_blank" rel="noopener">Divide Two Integers</a> </p>
+<p>不能用乘法、除法、取模操作进行除法操作。只能通过加分来操作。由于一个个加太慢，所以可以通过两倍两倍加来模拟乘法，类似二分</p>
+</li>
+<li><p>three sum问题</p>
+<p>在一个数组中找到三个数，和为0。类似一个数组中找到两个数相加为target，可以通过对数组排序后使用二分查找来查询。对于三个元素，可以先排序数组后，遍历数组过程中先指定一个元素i，然后通过二分查询在[i+1,n]中找到合为0-nums[i]的两个元素</p>
+</li>
+<li><p>four sum问题</p>
+<p>在three sum问题基础上，先确定一个元素，然后调用three sum找到特定和的三个元素即可</p>
+</li>
+</ul>
+</li>
+<li><p>贪心</p>
+<ul>
+<li><p>Maximum Length of Pair Chain</p>
+<p>dp和贪心都可以，但是本题可以用贪心来解决</p>
+</li>
 </ul>
 </li>
 <li><p>数组动态规划</p>
@@ -144,16 +169,33 @@
 <p>如果s[i]==’(‘ 则忽略，如果s[i] == ‘)’ 并且s[i - longest[i-1] - 1] == ‘(‘ 则配对成功，长度加二，并且如果i - longest[i-1] - 2也是一个最长子串，则可以拼接成为新的最大子串</p>
 <p>if s[i] == ‘(‘ longest[i] = 0;</p>
 <p>if s[i] == ‘)’ &amp;&amp; s[i - longest[i-1] - 1] == ‘(‘ then: longest[i] = longest[i-1] + 2 + longest[i-longest[i-1]-2]</p>
-<p>​</p>
+</li>
+<li><p>丢鸡蛋问题</p>
+<p>100层楼，有两个鸡蛋。如果鸡蛋从第k层丢下去不碎，则[0, k-1]都不会碎。问最少丢多少次，才知道从k层下丢不碎，k+1层会碎</p>
+<p>保守策略：第一次从k层下丢，如果碎了，则从[0,k-1]一层层尝试，一共k次。如果不碎，第二次尝试k+k-1,如果碎了，则尝试[k+1,k+k-1]，一共k次。所以可以得到k+k-1+k-2+…. = 100，即(1+k)*2/k = 100，可以得到k=14次</p>
+<p>dp：这个是个dp问题，f(n,m)表示n层楼，m个鸡蛋，需要的次数。</p>
+<p>f(0,m) = 0</p>
+<p>f(n,1) = n</p>
+<p>f(n,m) 表示从i楼下降，如果碎了即f(i-1,m-1)，如果不碎，则结果为f(n-i,m) ，即</p>
+<p>f(n,m) = min(max(f(i-1,m-1),f(n-i,m)))+1 for i = 1 ~ n，+1表示从i楼的那一次尝试</p>
+</li>
+<li><p><a href="https://leetcode.com/problems/longest-increasing-subsequence" target="_blank" rel="noopener">Longest Increasing Subsequence</a>  </p>
+<p>动态规划：dp[i]表示[i]的最长LIS</p>
+<p>dp[i] = max(1+dp[j]); for nums[j] &gt; nums[i], j =[i+1,n]</p>
+</li>
+<li><p>Largest Sum of Averages</p>
+<p>问题分解：<code>dp[0][k]</code> 表示[0-n]中选择k段可以获得的LSA，则</p>
+<p><code>dp[0][k] = max(dp[i][k-1]+avg(0,i)) for i = [1,n]</code> </p>
 </li>
 </ol>
+<p>12.</p>
 </li>
 </ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/25/算法导论/" data-id="cjgw16tbm000s0kbmseqetvw6" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/04/25/算法导论/" data-id="cjgyytpri000o59bm63tfgvfk" class="article-share-link">Delen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -166,7 +208,7 @@
   
   
     <a href="/2018/04/24/Divide Two Integers/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ancien</strong>
+      <strong class="article-nav-caption">Ouder</strong>
       <div class="article-nav-title">Divide Two Integers</div>
     </a>
   
@@ -181,7 +223,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Catégories</h3>
+    <h3 class="widget-title">Categorieën</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li></ul>
     </div>
@@ -191,7 +233,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Labels</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservices/">microservices</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队管理/">团队管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发流程/">开发流程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
     </div>
@@ -201,7 +243,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bash/" style="font-size: 10px;">bash</a> <a href="/tags/microservices/" style="font-size: 10px;">microservices</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/rpc/" style="font-size: 10px;">rpc</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/团队管理/" style="font-size: 10px;">团队管理</a> <a href="/tags/开发流程/" style="font-size: 10px;">开发流程</a> <a href="/tags/微服务/" style="font-size: 10px;">微服务</a> <a href="/tags/系统设计/" style="font-size: 15px;">系统设计</a>
     </div>
@@ -210,7 +252,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archieven</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
     </div>
@@ -220,7 +262,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
         
@@ -257,7 +299,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 John Doe<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
