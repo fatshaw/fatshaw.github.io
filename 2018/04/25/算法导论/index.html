@@ -5,17 +5,17 @@
   
   <title>算法导论 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="字符串处理  原地reverse字符串单测   树遍历  树对称   链表  链表反转 遍历或者递归计算    图论  邻接矩阵edge方法存储 搜索算法：Dfs,bfs,Dijkstra算法   搜索  Divide Two Integers  不能用乘法、除法、取模操作进行除法操作。只能通过加分来操作。由于一个个加太慢，所以可以通过两倍两倍加来模拟乘法，类似二分  three sum问题 在">
+  <meta name="description" content="字符串处理  原地reverse字符串单测   数组  Find All Numbers Disappeared in an Array 比较讨巧，因为题目限定了Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array)，所以可以通过原数组来记录某个数字是否出现，如果出现，将nums[i]设为nums[i]*-1，然后找到n">
 <meta name="keywords" content="algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="算法导论">
 <meta property="og:url" content="http://yoursite.com/2018/04/25/算法导论/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="字符串处理  原地reverse字符串单测   树遍历  树对称   链表  链表反转 遍历或者递归计算    图论  邻接矩阵edge方法存储 搜索算法：Dfs,bfs,Dijkstra算法   搜索  Divide Two Integers  不能用乘法、除法、取模操作进行除法操作。只能通过加分来操作。由于一个个加太慢，所以可以通过两倍两倍加来模拟乘法，类似二分  three sum问题 在">
-<meta property="og:updated_time" content="2018-05-09T10:32:39.961Z">
+<meta property="og:description" content="字符串处理  原地reverse字符串单测   数组  Find All Numbers Disappeared in an Array 比较讨巧，因为题目限定了Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array)，所以可以通过原数组来记录某个数字是否出现，如果出现，将nums[i]设为nums[i]*-1，然后找到n">
+<meta property="og:updated_time" content="2018-05-12T13:17:59.555Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法导论">
-<meta name="twitter:description" content="字符串处理  原地reverse字符串单测   树遍历  树对称   链表  链表反转 遍历或者递归计算    图论  邻接矩阵edge方法存储 搜索算法：Dfs,bfs,Dijkstra算法   搜索  Divide Two Integers  不能用乘法、除法、取模操作进行除法操作。只能通过加分来操作。由于一个个加太慢，所以可以通过两倍两倍加来模拟乘法，类似二分  three sum问题 在">
+<meta name="twitter:description" content="字符串处理  原地reverse字符串单测   数组  Find All Numbers Disappeared in an Array 比较讨巧，因为题目限定了Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array)，所以可以通过原数组来记录某个数字是否出现，如果出现，将nums[i]设为nums[i]*-1，然后找到n">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -55,7 +55,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -88,29 +88,42 @@
       
         <ol>
 <li><p>字符串处理</p>
-<ol>
+<ul>
 <li>原地reverse字符串单测</li>
-</ol>
+</ul>
+</li>
+<li><p>数组</p>
+<ul>
+<li><p>Find All Numbers Disappeared in an Array</p>
+<p>比较讨巧，因为题目限定了Given an array of integers where 1 ≤ a[i] ≤ <em>n</em> (<em>n</em> = size of array)，所以可以通过原数组来记录某个数字是否出现，如果出现，将nums[i]设为nums[i]*-1，然后找到nums[i] 大于0的即可。</p>
+</li>
+<li><p>Find All Duplicates in an Array</p>
+<p>接上题Find All Numbers Disappeared in an Array，遍历两次，第一次找出没有出现过得，则出现过得数字对应下标变为负数，第二遍将出现过一次的数字对应的下标变为正数，剩下的负数表示出现两次的</p>
+</li>
+<li><p>First Missing Positive</p>
+<ul>
+<li>将nums[i] -1数字放入对应下标位置。如果nums[i]-1&gt;=0&amp;&amp;nums[i]-1&lt;nums.length&amp;&amp;nums[nums[i]-1]=nums[i]</li>
+<li>也可以通过将原数组改为负数的方式，同上两题。但是要注意有原数组有负数和0存在</li>
+</ul>
+</li>
+<li><p>Majority Element</p>
+<p>找到数组中出现次数大于一半的元素，可以通过计数的方式，相同的计数加1，不相同减一，记录count为零时的元素，最后一个即为出现次数超过一半的元素</p>
+</li>
+</ul>
 </li>
 <li><p>树遍历</p>
-<ol>
+<ul>
 <li>树对称</li>
-</ol>
+</ul>
 </li>
 <li><p>链表</p>
-<ol>
+<ul>
 <li><p>链表反转</p>
 <p>遍历或者递归计算</p>
 </li>
-</ol>
-</li>
-<li><p>图论</p>
-<ul>
-<li>邻接矩阵edge方法存储</li>
-<li>搜索算法：Dfs,bfs,<strong>Dijkstra</strong>算法</li>
 </ul>
 </li>
-<li><p>搜索</p>
+<li><p>二分搜索</p>
 <ul>
 <li><p><a href="https://leetcode.com/problems/divide-two-integers" target="_blank" rel="noopener">Divide Two Integers</a> </p>
 <p>不能用乘法、除法、取模操作进行除法操作。只能通过加分来操作。由于一个个加太慢，所以可以通过两倍两倍加来模拟乘法，类似二分</p>
@@ -120,6 +133,9 @@
 </li>
 <li><p>four sum问题</p>
 <p>在three sum问题基础上，先确定一个元素，然后调用three sum找到特定和的三个元素即可</p>
+</li>
+<li><p>Trapping Rain Water</p>
+<p>蓄水池算法，左右两边找到柱子，中间的水是可以保留下来。有点像二分查询</p>
 </li>
 </ul>
 </li>
@@ -187,15 +203,27 @@
 <p>问题分解：<code>dp[0][k]</code> 表示[0-n]中选择k段可以获得的LSA，则</p>
 <p><code>dp[0][k] = max(dp[i][k-1]+avg(0,i)) for i = [1,n]</code> </p>
 </li>
+<li><p>Longest Palindromic Substring</p>
+<p>最大回文串：将数组变为奇数个元素。遍历数组，对于每一元素像两边扩展找回文，记录最长回文</p>
+</li>
+<li><p>Split Array with Equal Sum</p>
+<p>求和问题一般都会用一个数组sum[i]记录[0,i]之间的元素和，那如果要求任意两段数据和为sum[i,j] = sum[i] - sum[j]。该题目的方法是找到i, j 使得 sum[0,i-1] = sum[i+1,j-1]，然后再在j右边找到k，是得sum[j+1,k-1] = sum[k+1,n-1]</p>
+</li>
+<li></li>
 </ol>
-<p>12.</p>
+</li>
+<li><p>图论</p>
+<p>邻接矩阵edge方法存储</p>
+<p>搜索算法：Dfs,bfs,<strong>Dijkstra</strong>算法</p>
+</li>
+<li><p>​</p>
 </li>
 </ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/25/算法导论/" data-id="cjgyytpri000o59bm63tfgvfk" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2018/04/25/算法导论/" data-id="cjhvn4v46000h4cbmam1om3gm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -206,9 +234,18 @@
     
 <nav id="article-nav">
   
+    <a href="/2018/05/28/点赞设计/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
   
     <a href="/2018/04/24/Divide Two Integers/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ouder</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">Divide Two Integers</div>
     </a>
   
@@ -223,7 +260,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categorieën</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li></ul>
     </div>
@@ -233,7 +270,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Labels</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservices/">microservices</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队管理/">团队管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发流程/">开发流程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
     </div>
@@ -252,9 +289,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
     </div>
   </div>
 
@@ -262,9 +299,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/05/28/点赞设计/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2018/04/25/算法导论/">算法导论</a>
@@ -280,10 +321,6 @@
         
           <li>
             <a href="/2018/03/26/微服务认证授权/">微服务体系中的认证和授权</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/19/微服务技术选型/">微服务技术选型</a>
           </li>
         
       </ul>

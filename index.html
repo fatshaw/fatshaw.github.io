@@ -50,7 +50,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -60,6 +60,40 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-点赞设计" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/28/点赞设计/" class="article-date">
+  <time datetime="2018-05-28T07:37:41.122Z" itemprop="datePublished">2018-05-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="点赞"><a href="#点赞" class="headerlink" title="点赞"></a>点赞</h3><p>说明：每个视频，用户可以点赞，每天有10亿条记录，预计100w视频，1亿用户量。放在kafka中。每天凌晨统计每天点赞数最高100条视频，同时给这100个视频作者推送200个最近点赞用户</p>
+<p>统计点赞数最高的100条视频，并且这100个视频每个视频只要存储最后的200个点赞用户，所以并不需要保存每个用户的每次点赞记录。每个视频需要记录总的点赞数，同时要记录每个视频最近的200个点赞用户.</p>
+<p>由于每天有10亿数据，那么每秒有10^10/86400条记录~=12000条/s，所以使用mysql性能会有问题，可以使用redis或者其他的nosql数据库</p>
+<p>redis存储：</p>
+<ol>
+<li>记录每天每个url记录的点赞数，使用HINCRBY key=<figure class="highlight plain"><figcaption><span>，field：```$&#123;URL&#125;```，value：点赞数count</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">2. 每个url记录当天最近200个点赞用户，使用zset保存，key: ```$&#123;URL&#125;_$&#123;DATE&#125;_USER```, value：用户id，score：ts，按ts倒序保存。这边使用zset保存用户数据，主要目的是方便查询去重，避免一个用户点赞两次造成重复</span><br><span class="line">3. 每个zset只保存最近的最近的200条，所以超过200条的需要删除，可以通过```ZREMRANGEBYRANK $&#123;URL&#125;_$&#123;DATE&#125;_USER 0 -201```的方式去除最新200条以外的数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">这样每天凌晨，通过``` HSCAN URL_$&#123;DATE&#125;```的方式，遍历每天被点赞的url和数量，记录下top100的url，并通过遍历```ZRANGE $&#123;URL&#125;_$&#123;DATE&#125;_USER 0 -1```这个zset获取这个视频最后100个点赞的用户，并进行推送</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">资源消耗：</span><br><span class="line"></span><br><span class="line">qps~=12000/s，一台redis足够</span><br><span class="line"></span><br><span class="line">内存：100W视频，一个hset用来记录每个视频的点赞数，一个zset用来保存每个视频最后点赞的200个用户。每个视频url长度按1k计算，1000000*1000 ~= 1g，每个视频用户id按64位int计算，1000000 * 8 * 200 ~= 1.6g，所以内存一台机器物理机足够 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 任务模式</span><br><span class="line"></span><br><span class="line">每个用户有一个任务列表taskList:[task1,task2,…]，每个任务有次数限制，分为每日次数，每周次数，每月次数。一次请求，需要操作年月日的活动。用户量1亿。</span><br><span class="line"></span><br><span class="line">每一次请求，通过userid+taskid获取获取用户任务数据, 判断当前时间和上一次任务时间是否在一天或者一周或者一个月。</span><br><span class="line"></span><br><span class="line">key: user_id+task_id, value: &#123;</span><br><span class="line"></span><br><span class="line">​	&quot;day&quot;:1,</span><br><span class="line"></span><br><span class="line">​	&quot;week&quot;:3,</span><br><span class="line"></span><br><span class="line">​	&quot;month&quot;:6,</span><br><span class="line"></span><br><span class="line">​	&quot;time&quot;: ts</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>if sameday(ts,now()){<br>    day+1<br>    week+1<br>    month+1<br>}<br>if(isnotsameday(ts,now())&amp;&amp;issameweek(ts,now()) &amp;&amp; issamemonth(ts,now())){<br>    day=0;<br>    week+1<br>    month+1<br>}<br>if(isnotsameday(ts,now())&amp;&amp;isnotsameweek(ts,now()) &amp;&amp; issamemonth(ts,now())){<br>    day=0;<br>    week=0;<br>    month+1<br>}<br>if(isnotsameday(ts,now())&amp;&amp;issameweek(ts,now()) &amp;&amp; isnotsamemonth(ts,now())){<br>    day=0;<br>    week+1<br>    month=0<br>}<br>if(isnotsameday(ts,now())&amp;&amp;isnotsameweek(ts,now()) &amp;&amp; isnotsamemonth(ts,now())){<br>    day=0;<br>    week=0<br>    month=0<br>}<br><code>`</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/28/点赞设计/" data-id="cjhvn4v42000d4cbmrlo7bi81" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-算法导论" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -85,29 +119,42 @@
       
         <ol>
 <li><p>字符串处理</p>
-<ol>
+<ul>
 <li>原地reverse字符串单测</li>
-</ol>
+</ul>
+</li>
+<li><p>数组</p>
+<ul>
+<li><p>Find All Numbers Disappeared in an Array</p>
+<p>比较讨巧，因为题目限定了Given an array of integers where 1 ≤ a[i] ≤ <em>n</em> (<em>n</em> = size of array)，所以可以通过原数组来记录某个数字是否出现，如果出现，将nums[i]设为nums[i]*-1，然后找到nums[i] 大于0的即可。</p>
+</li>
+<li><p>Find All Duplicates in an Array</p>
+<p>接上题Find All Numbers Disappeared in an Array，遍历两次，第一次找出没有出现过得，则出现过得数字对应下标变为负数，第二遍将出现过一次的数字对应的下标变为正数，剩下的负数表示出现两次的</p>
+</li>
+<li><p>First Missing Positive</p>
+<ul>
+<li>将nums[i] -1数字放入对应下标位置。如果nums[i]-1&gt;=0&amp;&amp;nums[i]-1&lt;nums.length&amp;&amp;nums[nums[i]-1]=nums[i]</li>
+<li>也可以通过将原数组改为负数的方式，同上两题。但是要注意有原数组有负数和0存在</li>
+</ul>
+</li>
+<li><p>Majority Element</p>
+<p>找到数组中出现次数大于一半的元素，可以通过计数的方式，相同的计数加1，不相同减一，记录count为零时的元素，最后一个即为出现次数超过一半的元素</p>
+</li>
+</ul>
 </li>
 <li><p>树遍历</p>
-<ol>
+<ul>
 <li>树对称</li>
-</ol>
+</ul>
 </li>
 <li><p>链表</p>
-<ol>
+<ul>
 <li><p>链表反转</p>
 <p>遍历或者递归计算</p>
 </li>
-</ol>
-</li>
-<li><p>图论</p>
-<ul>
-<li>邻接矩阵edge方法存储</li>
-<li>搜索算法：Dfs,bfs,<strong>Dijkstra</strong>算法</li>
 </ul>
 </li>
-<li><p>搜索</p>
+<li><p>二分搜索</p>
 <ul>
 <li><p><a href="https://leetcode.com/problems/divide-two-integers" target="_blank" rel="noopener">Divide Two Integers</a> </p>
 <p>不能用乘法、除法、取模操作进行除法操作。只能通过加分来操作。由于一个个加太慢，所以可以通过两倍两倍加来模拟乘法，类似二分</p>
@@ -117,6 +164,9 @@
 </li>
 <li><p>four sum问题</p>
 <p>在three sum问题基础上，先确定一个元素，然后调用three sum找到特定和的三个元素即可</p>
+</li>
+<li><p>Trapping Rain Water</p>
+<p>蓄水池算法，左右两边找到柱子，中间的水是可以保留下来。有点像二分查询</p>
 </li>
 </ul>
 </li>
@@ -184,15 +234,27 @@
 <p>问题分解：<code>dp[0][k]</code> 表示[0-n]中选择k段可以获得的LSA，则</p>
 <p><code>dp[0][k] = max(dp[i][k-1]+avg(0,i)) for i = [1,n]</code> </p>
 </li>
+<li><p>Longest Palindromic Substring</p>
+<p>最大回文串：将数组变为奇数个元素。遍历数组，对于每一元素像两边扩展找回文，记录最长回文</p>
+</li>
+<li><p>Split Array with Equal Sum</p>
+<p>求和问题一般都会用一个数组sum[i]记录[0,i]之间的元素和，那如果要求任意两段数据和为sum[i,j] = sum[i] - sum[j]。该题目的方法是找到i, j 使得 sum[0,i-1] = sum[i+1,j-1]，然后再在j右边找到k，是得sum[j+1,k-1] = sum[k+1,n-1]</p>
+</li>
+<li></li>
 </ol>
-<p>12.</p>
+</li>
+<li><p>图论</p>
+<p>邻接矩阵edge方法存储</p>
+<p>搜索算法：Dfs,bfs,<strong>Dijkstra</strong>算法</p>
+</li>
+<li><p>​</p>
 </li>
 </ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/25/算法导论/" data-id="cjgyytpri000o59bm63tfgvfk" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2018/04/25/算法导论/" data-id="cjhvn4v46000h4cbmam1om3gm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -236,7 +298,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/24/Divide Two Integers/" data-id="cjgyytppn000059bmywzd0mm3" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2018/04/24/Divide Two Integers/" data-id="cjhvn4v3t00044cbmyada6w4p" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -286,7 +348,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/27/kata - bulls and cows/" data-id="cjgyytprc000j59bm1xg2afwh" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2018/03/27/kata - bulls and cows/" data-id="cjhvn4v4j000w4cbmajyzqo1k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -382,7 +444,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/26/微服务认证授权/" data-id="cjgyytprp000x59bmkrw14hmv" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2018/03/26/微服务认证授权/" data-id="cjhvn4v40000a4cbmbjc2yg57" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
@@ -500,7 +562,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/微服务技术选型/" data-id="cjgyytprk000q59bml3ydisqe" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2018/03/19/微服务技术选型/" data-id="cjhvn4v3w00064cbm6tgjny9q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/microservices/">microservices</a></li></ul>
@@ -643,7 +705,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/区块链简介/" data-id="cjgyytprm000t59bmgclbpmuf" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2018/02/28/区块链简介/" data-id="cjhvn4v3y00094cbmva4fta48" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
@@ -711,7 +773,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/02/bash多行注释/" data-id="cjgyytpq3000959bm84sj6944" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2018/01/02/bash多行注释/" data-id="cjhvn4v4m00104cbmw50de57y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bash/">bash</a></li></ul>
@@ -813,7 +875,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/07/Mysql 索引入门/" data-id="cjgyytppt000159bmdv3rh4jw" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/11/07/Mysql 索引入门/" data-id="cjhvn4v3j00004cbmczv41yzg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
@@ -953,70 +1015,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/backend_share/" data-id="cjgyytppx000359bm61mfd8wr" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/09/26/backend_share/" data-id="cjhvn4v3o00014cbmi8v8254a" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-系统调用思考" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/09/26/系统调用思考/" class="article-date">
-  <time datetime="2017-09-26T05:59:48.000Z" itemprop="datePublished">2017-09-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/26/系统调用思考/">系统调用思考</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一般系统都会访问外部系统，比如请求支付，会员卡，营销等各种系统，有时候一次请求需要访问多个下游系统，这种情况下失败是避免不了的。这里总结了几个注意事项</p>
-<ol>
-<li>访问下游系统必须设置超时时间，一般设置3s，不同业务系统需要进行相应调整</li>
-<li>访问下游系统qps必须控制，不能给下游系统压力过大</li>
-<li>幂等操作：访问下游失败了，可能是由于网络超时，下游系统已经处理成功。这个时候有两种方式<ol>
-<li>下游提供查询接口，通过查询判断是否处理成功</li>
-<li>下游提供幂等接口，通过幂等号多次请求下游，下游保证操作幂等</li>
-</ol>
-</li>
-<li>一次请求需要访问多个下游，如果保证多个下游的数据一致性</li>
-</ol>
-<ul>
-<li>通过分布式事务，比较重，而且需要各个下游支持分布式事务接口，比较难实现。</li>
-<li>通过二阶段事务方式访问各个下游，要求也是下游系统需要支持二阶段事务协议，也比较难实现。</li>
-<li>简单依次访问各个下游，如果某个下游访问失败了，可以进行的操作是：<ul>
-<li>简单重试n次，一般是3次。优点是简单，缺点是如果n次不成功，之前访问的系统无法回滚。</li>
-<li>如果n次不成功，有效的方案是落异步任务，然后通过任务无限次重试。优点是可以保证最终一致性。缺点是开发成本大，而且需要下游系统支持幂等。如果下游系统不支持幂等怎么办？我们可以自己为下游系统记录幂等信息，比如我们自己记录一个流水表，记录各个下游系统是否访问成功了。如果成功了就不再访问了</li>
-<li>如果落异步任务成本太高，怎么办？暂时没想到什么好方法，我能想到的就是客户端不断重试调用服务端。</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://leanote.com/api/file/getImage?fileId=577f5d2dab644135ea003fdf" alt="img"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/系统调用思考/" data-id="cjgyytprn000u59bmcg7hcmji" class="article-share-link">Delen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpc/">rpc</a></li></ul>
 
     </footer>
   </div>
@@ -1036,7 +1038,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categorieën</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li></ul>
     </div>
@@ -1046,7 +1048,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Labels</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservices/">microservices</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队管理/">团队管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发流程/">开发流程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
     </div>
@@ -1065,9 +1067,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
     </div>
   </div>
 
@@ -1075,9 +1077,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/05/28/点赞设计/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2018/04/25/算法导论/">算法导论</a>
@@ -1093,10 +1099,6 @@
         
           <li>
             <a href="/2018/03/26/微服务认证授权/">微服务体系中的认证和授权</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/19/微服务技术选型/">微服务技术选型</a>
           </li>
         
       </ul>
