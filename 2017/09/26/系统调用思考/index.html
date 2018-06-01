@@ -12,6 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/09/26/系统调用思考/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="一般系统都会访问外部系统，比如请求支付，会员卡，营销等各种系统，有时候一次请求需要访问多个下游系统，这种情况下失败是避免不了的。这里总结了几个注意事项  访问下游系统必须设置超时时间，一般设置3s，不同业务系统需要进行相应调整 访问下游系统qps必须控制，不能给下游系统压力过大 幂等操作：访问下游失败了，可能是由于网络超时，下游系统已经处理成功。这个时候有两种方式 下游提供查询接口，通过查询判断是">
+<meta property="og:locale" content="default">
 <meta property="og:image" content="https://leanote.com/api/file/getImage?fileId=577f5d2dab644135ea003fdf">
 <meta property="og:updated_time" content="2017-09-26T05:59:48.000Z">
 <meta name="twitter:card" content="summary">
@@ -114,7 +115,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/26/系统调用思考/" data-id="cjhvn4v44000f4cbmun30hrhn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/26/系统调用思考/" data-id="cjhvn6ib4000u9ibmgm5mefoq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpc/">rpc</a></li></ul>
