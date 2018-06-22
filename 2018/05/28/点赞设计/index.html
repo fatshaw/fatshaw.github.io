@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="点赞说明：每个视频，用户可以点赞，每天有10亿条记录，预计100w视频，1亿用户量。放在kafka中。每天凌晨统计每天点赞数最高100条视频，同时给这100个视频作者推送200个最近点赞用户 统计点赞数最高的100条视频，并且这100个视频每个视频只要存储最后的200个点赞用户，所以并不需要保存每个用户的每次点赞记录。每个视频需要记录总的点赞数，同时要记录每个视频最近的200个点赞用户. 由于每天">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-01T07:31:11.800Z">
+<meta property="og:updated_time" content="2018-06-01T07:31:41.053Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="点赞、任务模式设计">
 <meta name="twitter:description" content="点赞说明：每个视频，用户可以点赞，每天有10亿条记录，预计100w视频，1亿用户量。放在kafka中。每天凌晨统计每天点赞数最高100条视频，同时给这100个视频作者推送200个最近点赞用户 统计点赞数最高的100条视频，并且这100个视频每个视频只要存储最后的200个点赞用户，所以并不需要保存每个用户的每次点赞记录。每个视频需要记录总的点赞数，同时要记录每个视频最近的200个点赞用户. 由于每天">
@@ -111,11 +111,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">key: user_id+task_id, value: &#123;</span><br><span class="line"></span><br><span class="line">	&quot;day&quot;:1,</span><br><span class="line"></span><br><span class="line">	&quot;week&quot;:3,</span><br><span class="line"></span><br><span class="line">	&quot;month&quot;:6,</span><br><span class="line"></span><br><span class="line">	&quot;time&quot;: ts</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>伪代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">if sameday(ts,now())&#123;</span><br><span class="line">    day+1</span><br><span class="line">    week+1</span><br><span class="line">    month+1</span><br><span class="line">&#125;</span><br><span class="line">if(isnotsameday(ts,now())&amp;&amp;issameweek(ts,now()) &amp;&amp; issamemonth(ts,now()))&#123;</span><br><span class="line">    day=0;</span><br><span class="line">    week+1</span><br><span class="line">    month+1</span><br><span class="line">&#125;</span><br><span class="line">if(isnotsameday(ts,now())&amp;&amp;isnotsameweek(ts,now()) &amp;&amp; issamemonth(ts,now()))&#123;</span><br><span class="line">    day=0;</span><br><span class="line">    week=0;</span><br><span class="line">    month+1</span><br><span class="line">&#125;</span><br><span class="line">if(isnotsameday(ts,now())&amp;&amp;issameweek(ts,now()) &amp;&amp; isnotsamemonth(ts,now()))&#123;</span><br><span class="line">    day=0;</span><br><span class="line">    week+1</span><br><span class="line">    month=0</span><br><span class="line">&#125;</span><br><span class="line">if(isnotsameday(ts,now())&amp;&amp;isnotsameweek(ts,now()) &amp;&amp; isnotsamemonth(ts,now()))&#123;</span><br><span class="line">    day=0;</span><br><span class="line">    week=0</span><br><span class="line">    month=0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/28/点赞设计/" data-id="cjhvngp1p000swvbmvmu64u6b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/28/点赞设计/" data-id="cjipq3wip000jlkbmj05xorlo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/system-design/">system design</a></li></ul>
@@ -125,6 +124,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2018/06/22/redis rate limit/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          限流ratelimit
+        
+      </div>
+    </a>
   
   
     <a href="/2018/04/25/算法导论/" id="article-nav-older" class="article-nav-link-wrap">
@@ -155,7 +163,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservices/">microservices</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/system-design/">system design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队管理/">团队管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发流程/">开发流程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservices/">microservices</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rpc/">rpc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/system-design/">system design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队管理/">团队管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发流程/">开发流程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
     </div>
   </div>
 
@@ -165,7 +173,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bash/" style="font-size: 10px;">bash</a> <a href="/tags/microservices/" style="font-size: 10px;">microservices</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/rpc/" style="font-size: 10px;">rpc</a> <a href="/tags/system-design/" style="font-size: 10px;">system design</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/团队管理/" style="font-size: 10px;">团队管理</a> <a href="/tags/开发流程/" style="font-size: 10px;">开发流程</a> <a href="/tags/微服务/" style="font-size: 10px;">微服务</a> <a href="/tags/系统设计/" style="font-size: 15px;">系统设计</a>
+      <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bash/" style="font-size: 10px;">bash</a> <a href="/tags/microservices/" style="font-size: 10px;">microservices</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/rpc/" style="font-size: 10px;">rpc</a> <a href="/tags/system-design/" style="font-size: 10px;">system design</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/团队管理/" style="font-size: 10px;">团队管理</a> <a href="/tags/开发流程/" style="font-size: 10px;">开发流程</a> <a href="/tags/微服务/" style="font-size: 10px;">微服务</a> <a href="/tags/系统设计/" style="font-size: 15px;">系统设计</a>
     </div>
   </div>
 
@@ -174,7 +182,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
     </div>
   </div>
 
@@ -185,6 +193,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/06/22/redis rate limit/">限流ratelimit</a>
+          </li>
         
           <li>
             <a href="/2018/05/28/点赞设计/">点赞、任务模式设计</a>
@@ -200,10 +212,6 @@
         
           <li>
             <a href="/2018/03/27/kata - bulls and cows/">TDD coding kata - bulls and cows</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/26/微服务认证授权/">微服务体系中的认证和授权</a>
           </li>
         
       </ul>
