@@ -62,6 +62,91 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-微服务网关设计" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/10/微服务网关设计/" class="article-date">
+  <time datetime="2018-07-10T08:53:15.042Z" itemprop="datePublished">2018-07-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/10/微服务网关设计/">微服务网关设计</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="在微服务中网关的作用"><a href="#在微服务中网关的作用" class="headerlink" title="在微服务中网关的作用"></a>在微服务中网关的作用</h4><ol>
+<li>统一反向代理</li>
+<li>流量控制，降级，熔断</li>
+<li>统一日志管理</li>
+<li>内外网管理，权限控制</li>
+</ol>
+<p>其中1，2，3相对比较确定，通过hystrix，filter，redis ratelimit等机制可以完成。和架构本身关系不大。</p>
+<h4 id="内外网控制"><a href="#内外网控制" class="headerlink" title="内外网控制"></a>内外网控制</h4><p>对于第4点内外网控制，需要解决几个问题</p>
+<ol>
+<li>模块A可能是内网访问，也可能是外网访问，也可能是内外网都可以访问</li>
+<li>模块A是外网可以访问，但是模块A中个别接口是只能内网访问</li>
+</ol>
+<p>对于第1点，有几种做法</p>
+<ul>
+<li><p>使用多个eureka，内网系统注册到内网eureka，外网注册外网eureka，使用不同的网关访问对应eureka的系统。</p>
+<p>缺点：如果一个系统内网外网都要访问，必须注册两个eureka。</p>
+</li>
+<li><p>使用一个eureka，但是使用两个网关，内网网关和外网网关。微服务在注册时候通过eureka maps填写自定义字段NETWORK_TYPE, 如果是外网系统，该值设为OUTER。</p>
+<p>内网网关可以访问所有微服务，外网网关访问微服务的时候，获取eureka中对应的NETWORK_TYPE字段，如果为空，默认为内网系统，如果是OUTER则表示可以外网访问</p>
+</li>
+</ul>
+<p>对于第2点，有几种做法：</p>
+<ul>
+<li>拆分系统，保证某个模块中所有接口只能外网访问</li>
+<li>规定某个urlpath，比如/private，这个路径下的接口是不能外网访问的，只能通过内网网关进行访问</li>
+</ul>
+<h4 id="网关Token校验"><a href="#网关Token校验" class="headerlink" title="网关Token校验"></a>网关Token校验</h4><ul>
+<li><p>外网网关</p>
+<p>对于对外暴露的接口，不能以userid形式暴露，必须通过token，避免userid可以遍历。如果让底层微服务校验token会造成耦合问题。所以统一在外网网关中进行token校验，并转化为userid。</p>
+</li>
+</ul>
+<ol>
+<li>擦除header中USER_ID字段，避免客户端直接透传</li>
+<li>如果header里面没有token，不做任何操作</li>
+<li>如果header中有token，将token通过sso转为userid，并访问header的USER_ID字段</li>
+<li>下游服务根据接口需求通过header中获取userid，如果获取不到，则根据业务返回特定数据</li>
+<li>token统一在sso生成，使用jwt，网关通过http请求sso，如果觉得性能有问题，可以增加缓存</li>
+<li>原则，永远不能对外暴露userid的接口</li>
+</ol>
+<ul>
+<li><p>内部网关    </p>
+<p>内部调用或者调试等原因，可能直接调用userid比较方便，可以开设一个内部网关，不进行token校验。</p>
+</li>
+<li><p>后端系统</p>
+<p>后端不处理token，获取header中的userid</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/10/微服务网关设计/" data-id="cjjfh49pe000lmgbmolawea9m" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-redis rate limit" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/06/22/redis rate limit/" class="article-date">
@@ -106,7 +191,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/22/redis rate limit/" data-id="cjipq3wid0009lkbm05pw3jli" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/22/redis rate limit/" data-id="cjjfh49nx000bmgbmzw0prq3m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
@@ -167,7 +252,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/28/点赞设计/" data-id="cjipq3wip000jlkbmj05xorlo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/28/点赞设计/" data-id="cjjfh49pl000qmgbmi7n294cw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/system-design/">system design</a></li></ul>
@@ -338,7 +423,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/25/算法导论/" data-id="cjipq3wir000llkbm5cay9ffs" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/25/算法导论/" data-id="cjjfh49po000rmgbmmmhz5ybx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -382,7 +467,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/24/Divide Two Integers/" data-id="cjipq3wjg0016lkbm9idc64ji" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/24/Divide Two Integers/" data-id="cjjfh49r7001dmgbm0nhf8yop" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -432,7 +517,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/27/kata - bulls and cows/" data-id="cjipq3wia0005lkbmirqc4ezn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/27/kata - bulls and cows/" data-id="cjjfh49n30006mgbmrl03n0dq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
@@ -528,7 +613,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/26/微服务认证授权/" data-id="cjipq3wik000glkbmxw6npklx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/26/微服务认证授权/" data-id="cjjfh49pi000nmgbmplvzx6co" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
@@ -646,7 +731,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/微服务技术选型/" data-id="cjipq3wih000clkbmv5karx1b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/19/微服务技术选型/" data-id="cjjfh49or000jmgbm9vkypmw7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/microservices/">microservices</a></li></ul>
@@ -789,7 +874,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/区块链简介/" data-id="cjipq3wij000elkbmk3szucwr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/28/区块链简介/" data-id="cjjfh49on000hmgbmhr7g1r17" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
@@ -857,112 +942,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/02/bash多行注释/" data-id="cjipq3wi10001lkbmjj2ngrtk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/02/bash多行注释/" data-id="cjjfh49m10004mgbmygasst9y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bash/">bash</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Mysql 索引入门" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/11/07/Mysql 索引入门/" class="article-date">
-  <time datetime="2017-11-07T09:17:33.000Z" itemprop="datePublished">2017-11-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/mysql/">mysql</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/07/Mysql 索引入门/">mysql索引入门</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Mysql索引入门"><a href="#Mysql索引入门" class="headerlink" title="Mysql索引入门"></a>Mysql索引入门</h3><ol>
-<li><p>什么是索引</p>
-<p>索引用于快速找出在某个列中有一特定值的行</p>
-</li>
-<li><p>索引类型</p>
-<p>大多数MySQL索引(PRIMARY KEY、UNIQUE、INDEX和FULLTEXT)在B树中存储。只是空间列类型的索引使用R-树，并且MEMORY表还支持hash索引</p>
-</li>
-<li><p>索引越多越好？</p>
-<ul>
-<li>数据的变更（增删改）都需要维护索引，因此更多的索引意味着<strong>更多的维护成本</strong></li>
-<li>更多的索引意味着也需<strong>要更多的空间</strong> （一本100页的书，却有50页目录？）</li>
-<li>过小的表，建索引可能会更慢</li>
-<li>频繁写入影响性能</li>
-</ul>
-</li>
-<li><p>使用索引</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">like &apos;xxx%&apos;   -- 可以用索引</span><br><span class="line">Like &apos;%xxx%&apos;  -- 不能用索引</span><br><span class="line">like &apos;%xxx&apos;   -- 不能用索引</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;，&lt;=，=，&gt;，&gt;=，BETWEEN，IN 	-- 可以用索引</span><br><span class="line">&lt;&gt;，not in ，！=则不行  -- 不能用索引</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT `sname` FROM `t_stu` WHERE `age`=20; 	-- 会使用索引</span><br><span class="line">SELECT `sname` FROM `t_stu` WHERE `age`+10=30; 	-- 不会使用索引！！因为所有索引列参与了计算</span><br><span class="line">SELECT `sname` FROM `t_stu` WHERE `age`=30-10;	-- 会使用索引</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT `sname` FROM `stu` WHERE concat(`sname`,&apos;abc&apos;) =&apos;Jaskeyabc&apos;; -- 不会使用索引,因为使用了函数运算,原理与上面相同</span><br><span class="line">SELECT `sname` FROM `stu` WHERE `sname` =concat(&apos;Jaskey&apos;,&apos;abc&apos;); -- 会使用索引</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select * from dept where dname=&apos;jaskey&apos; or loc=&apos;bj&apos; or deptno=45 --如果条件中有or,即使其中有条件带索引也不会使用。换言之,就是要求使用的所有字段,都必须建立索引</span><br><span class="line">可以通过union来替换or</span><br><span class="line">select * from dept where dname=&apos;jaskey&apos; union</span><br><span class="line">select * from dept where loc=&apos;bj&apos; union</span><br><span class="line">select * from dept where deptno=45</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>什么样的字段适合建索引</p>
-<ul>
-<li>唯一性太差的字段不适合单独创建索引，即使频繁作为查询条件</li>
-<li>较频繁的作为查询条件的字段应该创建索引</li>
-</ul>
-</li>
-<li><p>什么时候用复合索引</p>
-<p>where a = x and b =xx 是建立索引a，索引b，索引ab，索引ba？</p>
-<p>看区分度</p>
-</li>
-<li><p>最左前缀原则</p>
-<p>复合索引（a,b,c），可以用到索引的情况是</p>
-<p>where a=x and b=x and c=x</p>
-<p>where a=x and b=x</p>
-<p>where a=x</p>
-<p>其余where条件都不能用到索引</p>
-</li>
-<li><p>order by 索引</p>
-<p>单独使用order by是不能用索引的，需要配合limit</p>
-<p>where+orderby时需要加复合索引，比如where a=x order by b,c需要加（a,b,c）索引</p>
-</li>
-<li><p>当有多个索引，选择哪个</p>
-<p>mysql 会自动选择返回集合小的索引</p>
-</li>
-<li><p>不要过早优化，除非仔细分析</p>
-<p>explain工具</p>
-</li>
-<li><p>Case Study </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"> CREATE TABLEt_cms_comment` (</span><br><span class="line"></span><br><span class="line">  id bigint(20) NOT NULL AUTO_INCREMENT,</span><br><span class="line"></span><br><span class="line">  content text,</span><br><span class="line"></span><br><span class="line">  create_time timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),</span><br><span class="line"></span><br><span class="line">  platform_id int(11) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  update_time timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),</span><br><span class="line"></span><br><span class="line">  target_type varchar(30) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  target_id bigint(20) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  content_type varchar(30) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  interaction_type varchar(30) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  user_id bigint(20) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  variety varchar(255) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  variety_id bigint(20) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  create_user bigint(20) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  deleted int(11) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  update_user bigint(20) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  audit_state varchar(30) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  author_type varchar(30) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  is_top bit(1) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  top_priority bigint(20) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  audit_user bigint(20) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  audit_time timestamp NULL DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  re_audit_user bigint(20) DEFAULT NULL,</span><br><span class="line"></span><br><span class="line">  PRIMARY KEY (id)</span><br><span class="line"></span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</span><br></pre></td></tr></table></figure>
-<p>select * from t_cms_comment where create_time &lt; ‘2017-11-09 10:00:00’ and variety_id=5 and variety=’studio’ order by top_priority desc ,create_time desc, id desc limit 200     —  怎么加索引？</p>
-<ul>
-<li>where create_time &lt; ‘2017-11-09 10:00:00’ and variety_id=5 and variety=’studio’ </li>
-<li>order by : top_priority desc ,create_time desc, id desc</li>
-<li>where + order by 复合索引，如果不行，优先考虑对sort建立索引，因为sort比较耗性能</li>
-<li>可能索引：(top_priority+create_time+id), (create_time+varierty_id),(variety_id)</li>
-</ul>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/07/Mysql 索引入门/" data-id="cjipq3wjh0017lkbmwt5s9hsv" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
 
     </footer>
   </div>
@@ -1004,7 +987,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bash/" style="font-size: 10px;">bash</a> <a href="/tags/microservices/" style="font-size: 10px;">microservices</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/rpc/" style="font-size: 10px;">rpc</a> <a href="/tags/system-design/" style="font-size: 10px;">system design</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/团队管理/" style="font-size: 10px;">团队管理</a> <a href="/tags/开发流程/" style="font-size: 10px;">开发流程</a> <a href="/tags/微服务/" style="font-size: 10px;">微服务</a> <a href="/tags/系统设计/" style="font-size: 15px;">系统设计</a>
+      <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bash/" style="font-size: 10px;">bash</a> <a href="/tags/microservices/" style="font-size: 10px;">microservices</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/rpc/" style="font-size: 10px;">rpc</a> <a href="/tags/system-design/" style="font-size: 10px;">system design</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/团队管理/" style="font-size: 10px;">团队管理</a> <a href="/tags/开发流程/" style="font-size: 10px;">开发流程</a> <a href="/tags/微服务/" style="font-size: 15px;">微服务</a> <a href="/tags/系统设计/" style="font-size: 15px;">系统设计</a>
     </div>
   </div>
 
@@ -1013,7 +996,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
     </div>
   </div>
 
@@ -1024,6 +1007,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/07/10/微服务网关设计/">微服务网关设计</a>
+          </li>
         
           <li>
             <a href="/2018/06/22/redis rate limit/">限流ratelimit</a>
@@ -1039,10 +1026,6 @@
         
           <li>
             <a href="/2018/04/24/Divide Two Integers/">Divide Two Integers</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/27/kata - bulls and cows/">TDD coding kata - bulls and cows</a>
           </li>
         
       </ul>

@@ -3,15 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2017/11 | Hexo</title>
+  <title>微服务网关设计 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2017/11/index.html">
+  <meta name="description" content="在微服务中网关的作用 统一反向代理 流量控制，降级，熔断 统一日志管理 内外网管理，权限控制  其中1，2，3相对比较确定，通过hystrix，filter，redis ratelimit等机制可以完成。和架构本身关系不大。 内外网控制对于第4点内外网控制，需要解决几个问题  模块A可能是内网访问，也可能是外网访问，也可能是内外网都可以访问 模块A是外网可以访问，但是模块A中个别接口是只能内网访问">
+<meta name="keywords" content="微服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务网关设计">
+<meta property="og:url" content="http://yoursite.com/2018/07/10/微服务网关设计/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在微服务中网关的作用 统一反向代理 流量控制，降级，熔断 统一日志管理 内外网管理，权限控制  其中1，2，3相对比较确定，通过hystrix，filter，redis ratelimit等机制可以完成。和架构本身关系不大。 内外网控制对于第4点内外网控制，需要解决几个问题  模块A可能是内网访问，也可能是外网访问，也可能是内外网都可以访问 模块A是外网可以访问，但是模块A中个别接口是只能内网访问">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-10T09:08:21.329Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="微服务网关设计">
+<meta name="twitter:description" content="在微服务中网关的作用 统一反向代理 流量控制，降级，熔断 统一日志管理 内外网管理，权限控制  其中1，2，3相对比较确定，通过hystrix，filter，redis ratelimit等机制可以完成。和架构本身关系不大。 内外网控制对于第4点内外网控制，需要解决几个问题  模块A可能是内网访问，也可能是外网访问，也可能是内外网都可以访问 模块A是外网可以访问，但是模块A中个别接口是只能内网访问">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,39 +65,100 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/11/07/Mysql 索引入门/" class="archive-article-date">
-  <time datetime="2017-11-07T09:17:33.000Z" itemprop="datePublished">Nov 7</time>
+        <section id="main"><article id="post-微服务网关设计" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/10/微服务网关设计/" class="article-date">
+  <time datetime="2018-07-10T08:53:15.042Z" itemprop="datePublished">2018-07-10</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/07/Mysql 索引入门/">mysql索引入门</a>
+    <h1 class="article-title" itemprop="name">
+      微服务网关设计
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="在微服务中网关的作用"><a href="#在微服务中网关的作用" class="headerlink" title="在微服务中网关的作用"></a>在微服务中网关的作用</h4><ol>
+<li>统一反向代理</li>
+<li>流量控制，降级，熔断</li>
+<li>统一日志管理</li>
+<li>内外网管理，权限控制</li>
+</ol>
+<p>其中1，2，3相对比较确定，通过hystrix，filter，redis ratelimit等机制可以完成。和架构本身关系不大。</p>
+<h4 id="内外网控制"><a href="#内外网控制" class="headerlink" title="内外网控制"></a>内外网控制</h4><p>对于第4点内外网控制，需要解决几个问题</p>
+<ol>
+<li>模块A可能是内网访问，也可能是外网访问，也可能是内外网都可以访问</li>
+<li>模块A是外网可以访问，但是模块A中个别接口是只能内网访问</li>
+</ol>
+<p>对于第1点，有几种做法</p>
+<ul>
+<li><p>使用多个eureka，内网系统注册到内网eureka，外网注册外网eureka，使用不同的网关访问对应eureka的系统。</p>
+<p>缺点：如果一个系统内网外网都要访问，必须注册两个eureka。</p>
+</li>
+<li><p>使用一个eureka，但是使用两个网关，内网网关和外网网关。微服务在注册时候通过eureka maps填写自定义字段NETWORK_TYPE, 如果是外网系统，该值设为OUTER。</p>
+<p>内网网关可以访问所有微服务，外网网关访问微服务的时候，获取eureka中对应的NETWORK_TYPE字段，如果为空，默认为内网系统，如果是OUTER则表示可以外网访问</p>
+</li>
+</ul>
+<p>对于第2点，有几种做法：</p>
+<ul>
+<li>拆分系统，保证某个模块中所有接口只能外网访问</li>
+<li>规定某个urlpath，比如/private，这个路径下的接口是不能外网访问的，只能通过内网网关进行访问</li>
+</ul>
+<h4 id="网关Token校验"><a href="#网关Token校验" class="headerlink" title="网关Token校验"></a>网关Token校验</h4><ul>
+<li><p>外网网关</p>
+<p>对于对外暴露的接口，不能以userid形式暴露，必须通过token，避免userid可以遍历。如果让底层微服务校验token会造成耦合问题。所以统一在外网网关中进行token校验，并转化为userid。</p>
+</li>
+</ul>
+<ol>
+<li>擦除header中USER_ID字段，避免客户端直接透传</li>
+<li>如果header里面没有token，不做任何操作</li>
+<li>如果header中有token，将token通过sso转为userid，并访问header的USER_ID字段</li>
+<li>下游服务根据接口需求通过header中获取userid，如果获取不到，则根据业务返回特定数据</li>
+<li>token统一在sso生成，使用jwt，网关通过http请求sso，如果觉得性能有问题，可以增加缓存</li>
+<li>原则，永远不能对外暴露userid的接口</li>
+</ol>
+<ul>
+<li><p>内部网关    </p>
+<p>内部调用或者调试等原因，可能直接调用userid比较方便，可以开设一个内部网关，不进行token校验。</p>
+</li>
+<li><p>后端系统</p>
+<p>后端不处理token，获取header中的userid</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/10/微服务网关设计/" data-id="cjjfh49pe000lmgbmolawea9m" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/22/redis rate limit/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">限流ratelimit</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 </section>
         
