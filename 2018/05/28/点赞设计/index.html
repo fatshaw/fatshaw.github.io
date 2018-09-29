@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="点赞说明：每个视频，用户可以点赞，每天有10亿条记录，预计100w视频，1亿用户量。放在kafka中。每天凌晨统计每天点赞数最高100条视频，同时给这100个视频作者推送200个最近点赞用户 统计点赞数最高的100条视频，并且这100个视频每个视频只要存储最后的200个点赞用户，所以并不需要保存每个用户的每次点赞记录。每个视频需要记录总的点赞数，同时要记录每个视频最近的200个点赞用户. 由于每天">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-01T07:31:41.053Z">
+<meta property="og:updated_time" content="2018-09-29T04:02:39.256Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="点赞、任务模式设计">
 <meta name="twitter:description" content="点赞说明：每个视频，用户可以点赞，每天有10亿条记录，预计100w视频，1亿用户量。放在kafka中。每天凌晨统计每天点赞数最高100条视频，同时给这100个视频作者推送200个最近点赞用户 统计点赞数最高的100条视频，并且这100个视频每个视频只要存储最后的200个点赞用户，所以并不需要保存每个用户的每次点赞记录。每个视频需要记录总的点赞数，同时要记录每个视频最近的200个点赞用户. 由于每天">
@@ -104,7 +104,7 @@
 </ul>
 <ol>
 <li>qps~=12000/s，一台redis足够</li>
-<li>内存：100W视频，一个hset用来记录每个视频的点赞数，一个zset用来保存每个视频最后点赞的200个用户。每个视频url长度按1k计算，1000000<em>1000 ~= 1g，每个视频用户id按64位int计算，1000000 </em> 8 * 200 ~= 1.6g，所以内存一台机器物理机足够 </li>
+<li>内存：100W视频，一个hset用来记录每个视频的点赞数，一个zset用来保存每个视频最后点赞的200个用户。每个视频url长度按1k计算，1000000 <em> 1000 ~= 1g，每个视频用户id按64位int计算，1000000 </em> 8 * 200 ~= 1.6g，所以内存一台机器物理机足够 </li>
 </ol>
 <h3 id="任务模式"><a href="#任务模式" class="headerlink" title="任务模式"></a>任务模式</h3><p>每个用户有一个任务列表taskList:[task1,task2,…]，每个任务有次数限制，分为每日次数，每周次数，每月次数。一次请求，需要操作年月日的活动。用户量1亿。</p>
 <p>每一次请求，通过userid+taskid获取获取用户任务数据, 判断当前时间和上一次任务时间是否在一天或者一周或者一个月。</p>
@@ -114,7 +114,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/28/点赞设计/" data-id="cjjfh49pl000qmgbmi7n294cw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/28/点赞设计/" data-id="cjmmwutys000odjbms1ljfn9d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/system-design/">system design</a></li></ul>
